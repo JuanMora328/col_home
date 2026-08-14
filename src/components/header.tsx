@@ -15,7 +15,7 @@ export function Header() {
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-semibold">
             <li>
               <Link
-                href="/encontrar"
+                href="/buscar"
                 className="text-ink-muted transition-colors hover:text-primary"
               >
                 Encontrar vivienda
