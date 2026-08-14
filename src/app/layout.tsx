@@ -7,7 +7,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Colombia Abriga",
   description:
-    "Conectamos a personas que necesitan vivienda con quienes tienen un espacio disponible en Colombia.",
+    "Una forma sencilla de conectar personas que necesitan vivienda con quienes tienen un espacio disponible.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

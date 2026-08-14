@@ -1,8 +1,14 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Container } from "@/components/container";
 import { ListingCard } from "@/components/listing-card";
 import { SearchForm } from "@/components/search-form";
 import { getRecentListings } from "@/lib/listings";
+
+export const metadata: Metadata = {
+  title: "Colombia Abriga",
+  description: "Una forma sencilla de conectar personas que necesitan vivienda con quienes tienen un espacio disponible.",
+};
 
 export default async function Home() {
   const listings = await getRecentListings();

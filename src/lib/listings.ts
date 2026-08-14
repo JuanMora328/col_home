@@ -1,10 +1,14 @@
 import "server-only";
 
+import { cache } from "react";
 import { createPrivilegedSupabaseClient } from "@/lib/supabase/server";
 import { createPublicSupabaseClient } from "@/lib/supabase/public";
 import type { Listing, ListingImage } from "@/types/data";
 
 export type ListingPreview = Pick<Listing, "id" | "property_type" | "availability_type" | "city_name" | "neighborhood" | "monthly_price" | "bedrooms" | "bathrooms"> & { imageUrl?: string };
+export type ListingDetail = Pick<Listing, "id" | "property_type" | "availability_type" | "department_name" | "city_name" | "neighborhood" | "monthly_price" | "bedrooms" | "bathrooms" | "description" | "contact_name" | "contact_phone"> & {
+  images: { url: string; sortOrder: number }[];
+};
 
 export interface ListingFilters {
   department?: string; city?: string; maxPrice?: number; propertyType?: string;
@@ -50,3 +54,42 @@ export async function searchListings(filters: ListingFilters) {
     return { listings: await addSignedImages((data ?? []) as unknown as (ListingPreview & { listing_images: Pick<ListingImage, "storage_path">[] })[]), count: count ?? 0, pageSize: PAGE_SIZE, error: false };
   } catch { console.error("No fue posible consultar las viviendas."); return { listings: [], count: 0, pageSize: PAGE_SIZE, error: true }; }
 }
+
+const detailSelection = "id,property_type,availability_type,department_name,city_name,neighborhood,monthly_price,bedrooms,bathrooms,description,contact_name,contact_phone,listing_images(storage_path,sort_order)";
+
+export const getPublishedListing = cache(async (id: string): Promise<ListingDetail | null> => {
+  try {
+    const { data, error } = await createPublicSupabaseClient()
+      .from("listings")
+      .select(detailSelection)
+      .eq("id", id)
+      .eq("status", "PUBLISHED")
+      .maybeSingle();
+
+    if (error || !data) return null;
+    const row = data as unknown as Omit<ListingDetail, "images"> & {
+      listing_images?: Pick<ListingImage, "storage_path" | "sort_order">[];
+    };
+    const admin = createPrivilegedSupabaseClient();
+    const orderedImages = [...(row.listing_images ?? [])].sort(
+      (left, right) => left.sort_order - right.sort_order,
+    );
+    const signedImages = await Promise.all(
+      orderedImages.map(async (image) => {
+        const { data: signed, error: signError } = await admin.storage
+          .from("listing-images")
+          .createSignedUrl(image.storage_path, 60 * 30);
+        if (signError || !signed?.signedUrl) return null;
+        return { url: signed.signedUrl, sortOrder: image.sort_order };
+      }),
+    );
+    const { listing_images: _privateImages, ...listing } = row;
+    void _privateImages;
+    return {
+      ...listing,
+      images: signedImages.filter((image): image is NonNullable<typeof image> => image !== null),
+    };
+  } catch {
+    return null;
+  }
+});
