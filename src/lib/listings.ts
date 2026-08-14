@@ -29,19 +29,45 @@ async function addSignedImages(rows: (ListingPreview & { listing_images?: Pick<L
   }));
 }
 
-const selection = "id,property_type,availability_type,city_name,neighborhood,monthly_price,bedrooms,bathrooms,listing_images(storage_path,sort_order)";
+const previewSelection = "id,property_type,availability_type,city_name,neighborhood,monthly_price,bedrooms,bathrooms";
+
+async function addPreviewImages(rows: ListingPreview[]): Promise<ListingPreview[]> {
+  if (!rows.length) return rows;
+
+  const { data, error } = await createPublicSupabaseClient()
+    .from("listing_images")
+    .select("listing_id,storage_path,sort_order")
+    .in("listing_id", rows.map(({ id }) => id))
+    .order("sort_order", { ascending: true });
+
+  // Un error en las fotos opcionales no debe ocultar viviendas válidas.
+  if (error) return rows;
+  const firstImageByListing = new Map<string, Pick<ListingImage, "storage_path">>();
+  for (const image of (data ?? []) as Pick<ListingImage, "listing_id" | "storage_path">[]) {
+    if (!firstImageByListing.has(image.listing_id)) {
+      firstImageByListing.set(image.listing_id, { storage_path: image.storage_path });
+    }
+  }
+
+  return addSignedImages(rows.map((row) => ({
+    ...row,
+    listing_images: firstImageByListing.has(row.id)
+      ? [firstImageByListing.get(row.id)!]
+      : [],
+  })));
+}
 
 export async function getRecentListings(limit = 3): Promise<ListingPreview[]> {
   try {
-    const { data, error } = await createPublicSupabaseClient().from("listings").select(selection).eq("status", "PUBLISHED").order("created_at", { ascending: false }).order("sort_order", { referencedTable: "listing_images", ascending: true }).limit(limit);
+    const { data, error } = await createPublicSupabaseClient().from("listings").select(previewSelection).eq("status", "PUBLISHED").order("created_at", { ascending: false }).limit(limit);
     if (error) throw error;
-    return addSignedImages((data ?? []) as unknown as (ListingPreview & { listing_images: Pick<ListingImage, "storage_path">[] })[]);
+    return addPreviewImages((data ?? []) as ListingPreview[]);
   } catch { console.error("No fue posible consultar las viviendas recientes."); return []; }
 }
 
 export async function searchListings(filters: ListingFilters) {
   try {
-    let query = createPublicSupabaseClient().from("listings").select(selection, { count: "exact" }).eq("status", "PUBLISHED");
+    let query = createPublicSupabaseClient().from("listings").select(previewSelection, { count: "exact" }).eq("status", "PUBLISHED");
     if (filters.department) query = query.eq("department_code", filters.department);
     if (filters.city) query = query.eq("city_code", filters.city);
     if (filters.maxPrice !== undefined) query = query.lte("monthly_price", filters.maxPrice);
@@ -49,9 +75,9 @@ export async function searchListings(filters: ListingFilters) {
     if (filters.minBedrooms !== undefined) query = query.gte("bedrooms", filters.minBedrooms);
     if (filters.availabilityType) query = query.eq("availability_type", filters.availabilityType);
     const start = (filters.page - 1) * PAGE_SIZE;
-    const { data, count, error } = await query.order("created_at", { ascending: false }).order("sort_order", { referencedTable: "listing_images", ascending: true }).range(start, start + PAGE_SIZE - 1);
+    const { data, count, error } = await query.order("created_at", { ascending: false }).range(start, start + PAGE_SIZE - 1);
     if (error) throw error;
-    return { listings: await addSignedImages((data ?? []) as unknown as (ListingPreview & { listing_images: Pick<ListingImage, "storage_path">[] })[]), count: count ?? 0, pageSize: PAGE_SIZE, error: false };
+    return { listings: await addPreviewImages((data ?? []) as ListingPreview[]), count: count ?? 0, pageSize: PAGE_SIZE, error: false };
   } catch { console.error("No fue posible consultar las viviendas."); return { listings: [], count: 0, pageSize: PAGE_SIZE, error: true }; }
 }
 
