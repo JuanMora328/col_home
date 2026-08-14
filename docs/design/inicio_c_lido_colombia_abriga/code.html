@@ -1,0 +1,381 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Colombia Abriga - Encuentra un hogar cerca de ti</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#5c4300",
+                      "on-surface": "#1c1c19",
+                      "on-primary-fixed-variant": "#7d2d00",
+                      "on-secondary-fixed-variant": "#364e00",
+                      "secondary": "#496800",
+                      "on-tertiary-container": "#fffbff",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#f0ede9",
+                      "surface-parchment": "#fdfaf5",
+                      "surface": "#fcf9f4",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#dcc1b6",
+                      "surface-variant": "#e5e2dd",
+                      "surface-dim": "#dcdad5",
+                      "inverse-primary": "#ffb597",
+                      "on-error": "#ffffff",
+                      "inverse-on-surface": "#f3f0eb",
+                      "on-surface-variant": "#56423b",
+                      "tertiary-container": "#956e00",
+                      "outline": "#897269",
+                      "secondary-fixed-dim": "#add461",
+                      "primary": "#9a4113",
+                      "on-secondary-container": "#4e6e00",
+                      "surface-tint": "#9d4315",
+                      "on-secondary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "secondary-container": "#c8f17a",
+                      "on-primary-container": "#fffbff",
+                      "charcoal-text": "#2d2d2a",
+                      "tertiary-fixed": "#ffdfa0",
+                      "background": "#fcf9f4",
+                      "on-primary-fixed": "#360f00",
+                      "secondary-fixed": "#c8f17a",
+                      "primary-fixed": "#ffdbcd",
+                      "on-background": "#1c1c19",
+                      "sage-muted": "#8ba888",
+                      "surface-container-low": "#f6f3ee",
+                      "primary-fixed-dim": "#ffb597",
+                      "tertiary-fixed-dim": "#f6be39",
+                      "surface-bright": "#fcf9f4",
+                      "surface-container-highest": "#e5e2dd",
+                      "surface-container-high": "#eae8e3",
+                      "primary-container": "#ba582a",
+                      "inverse-surface": "#31302d",
+                      "tertiary": "#765700",
+                      "on-tertiary-fixed": "#261a00",
+                      "error": "#ba1a1a",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#131f00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-lg": "48px",
+                      "unit": "8px",
+                      "section-gap": "80px",
+                      "margin-desktop": "48px",
+                      "stack-sm": "12px",
+                      "stack-md": "24px",
+                      "gutter": "24px",
+                      "margin-mobile": "20px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Montserrat"
+                      ],
+                      "headline-md": [
+                              "Montserrat"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "display-lg-mobile": [
+                              "Montserrat"
+                      ],
+                      "headline-sm": [
+                              "Montserrat"
+                      ],
+                      "headline-md-mobile": [
+                              "Montserrat"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        .soft-shadow {
+            box-shadow: 0 10px 40px -10px rgba(192, 93, 46, 0.08);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md bg-background">
+<!-- TopNavBar -->
+<nav class="w-full top-0 sticky bg-surface-parchment dark:bg-inverse-surface z-50 flat no shadows">
+<div class="flex justify-between items-center px-margin-desktop py-stack-md max-w-[1200px] mx-auto">
+<div class="font-display-lg text-display-lg text-primary dark:text-primary-fixed-dim">
+                Colombia Abriga
+            </div>
+<div class="hidden md:flex items-center gap-stack-md font-body-md text-body-md text-primary dark:text-primary-fixed-dim">
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors duration-200 active:scale-95 transition-transform duration-150 px-unit py-unit" href="#">
+                    Encontrar vivienda
+                </a>
+<a class="dark:text-on-surface-variant hover:text-primary hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors duration-200 active:scale-95 transition-transform duration-150 px-unit py-unit text-on-surface" href="#" style="opacity: 0;">Nuestra misión</a>
+</div>
+<div class="hidden md:flex">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-stack-md py-stack-sm rounded-lg hover:bg-surface-tint active:scale-95 transition-all duration-150">
+                    Publicar vivienda
+                </button>
+</div>
+<!-- Mobile Menu Button -->
+<button class="md:hidden text-primary p-unit">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Hero Section -->
+<section class="flex flex-col items-center text-center py-section-gap gap-stack-md">
+<div class="max-w-2xl space-y-stack-md">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">
+                    Encuentra un hogar cerca de ti
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                    Una forma sencilla de conectar personas que necesitan vivienda con quienes tienen un espacio disponible.
+                </p>
+</div>
+<!-- Search Card -->
+<div class="w-full max-w-4xl bg-surface-container-lowest rounded-xl p-stack-md md:p-stack-lg soft-shadow flex flex-col md:flex-row gap-stack-md md:items-end">
+<div class="flex-1 space-y-unit">
+<label class="font-label-md text-label-md block text-on-surface">Departamento</label>
+<select class="w-full rounded-lg border-2 border-sage-muted bg-transparent px-4 py-3 focus:border-primary focus:ring-0 outline-none transition-colors">
+<option value="">Selecciona departamento</option>
+<option value="antioquia">Antioquia</option>
+<option value="cundinamarca">Cundinamarca</option>
+<option value="valle">Valle del Cauca</option>
+</select>
+</div>
+<div class="flex-1 space-y-unit">
+<label class="font-label-md text-label-md block text-on-surface">Ciudad</label>
+<select class="w-full rounded-lg border-2 border-sage-muted bg-transparent px-4 py-3 focus:border-primary focus:ring-0 outline-none transition-colors">
+<option value="">Selecciona ciudad</option>
+<option value="medellin">Medellín</option>
+<option value="bogota">Bogotá</option>
+<option value="cali">Cali</option>
+</select>
+</div>
+<div class="flex-1 space-y-unit">
+<label class="font-label-md text-label-md block text-on-surface">Presupuesto Máximo</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full rounded-lg border-2 border-sage-muted bg-transparent pl-8 pr-4 py-3 focus:border-primary focus:ring-0 outline-none transition-colors" placeholder="Ej. 500000" type="number">
+</div>
+</div>
+<div class="w-full md:w-auto pt-stack-sm md:pt-0">
+<button class="w-full md:w-auto bg-primary text-on-primary font-label-md text-label-md px-stack-lg py-3 rounded-lg hover:bg-surface-tint active:scale-95 transition-all duration-150 flex items-center justify-center gap-2 shadows">
+<span class="material-symbols-outlined text-[20px]">search</span>
+                        Buscar vivienda
+                    </button>
+</div>
+</div>
+<!-- Secondary Action -->
+<div class="mt-stack-md flex flex-col sm:flex-row items-center gap-stack-sm">
+<span class="font-body-md text-body-md text-on-surface-variant">¿Tienes una vivienda disponible?</span>
+<button class="border-2 border-sage-muted text-on-surface font-label-md text-label-md px-stack-md py-stack-sm rounded-lg hover:border-primary hover:text-primary active:scale-95 transition-all duration-150">
+                    Publicar vivienda
+                </button>
+</div>
+</section>
+<!-- Recent Listings -->
+<section class="py-section-gap space-y-stack-lg border-t border-surface-variant mt-section-gap">
+<h2 class="font-headline-md-mobile md:font-headline-md text-headline-md-mobile md:text-headline-md text-on-surface">
+                Viviendas disponibles recientemente
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden soft-shadow group hover:-translate-y-1 transition-transform duration-300">
+<div class="aspect-video w-full relative overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A warm, sunlit photograph of a modest but well-kept courtyard in a traditional Colombian neighborhood. Terracotta tiled roofs are visible in the background against a clear blue sky. Potted green plants add life to the scene. The lighting is natural and bright, evoking a sense of community, safety, and grassroots warmth in a light-mode organic minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYIeLMBGcHAF5mfeAXaf6KW-RFFd8HnA8h-EaOR-sStOdLitXN9YZ2W2GHjmbNqB1WuZHSgvi7dvo5z5TjiLjXO7PQw-b_qjT-Oqzjj0F74VRXafSmB_VEYHPqDQOTCMzHbEFOyu6ZRp90GwcoWghbzFfQPAJ9yfRsdRBmhtsQb7T2U9mzQ8GvcKosGzG0X_eM9eAkmZD1xhaz3Fdy1s5VgIcdpEJ-Er53WACZ3yKfHzNnqN-zjfIg">
+<div class="absolute top-4 right-4 bg-surface-container-lowest/90 backdrop-blur px-3 py-1 rounded-full font-label-md text-label-md text-on-surface">
+                            $450.000 / mes
+                        </div>
+</div>
+<div class="p-stack-md space-y-stack-sm">
+<div class="flex flex-wrap gap-2">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-caption text-caption">Habitación</span>
+<span class="bg-surface-container text-on-surface-variant px-3 py-1 rounded-full font-caption text-caption">Baño compartido</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Habitación luminosa en casa familiar</h3>
+<div class="flex items-center gap-2 font-body-md text-body-md text-on-surface">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="">Barrio La Floresta, Medellín</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+                            Se arrienda habitación amplia con ventana a la calle, ideal para estudiante o trabajador tranquilo. Ambiente familiar.
+                        </p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden soft-shadow group hover:-translate-y-1 transition-transform duration-300">
+<div class="aspect-video w-full relative overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A bright and airy interior shot of a simple, clean living space in Colombia. Natural sunlight streams through a large window, illuminating light-colored walls and warm wooden furniture. A woven rug sits on a terracotta tile floor. The atmosphere is peaceful, inviting, and human-centric, aligning with an organic minimalist design language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv83LvQdD4MFZL4PXGHk7VsJ9gNl6fjUQuGdLgFhJZfTJqkJjbwZIlsNBv7QVMwurhC69mGFb4ERT7QkQhzZ65Y6TTWkrIW_LgeoSvJtxP4HtR7PQ_4KeccsaT3HTRZ4aA7Ozn1yjr2tBeq0gHvMCyHDApp7X_nJdkDczuu0-tZb2Z_OivSQ3QpSNGSVCLuhJlaxBGFvX22tZm9da_qqHAkkfY2EGbCtubhhUg5F8IosHpKvZPXrwY">
+<div class="absolute top-4 right-4 bg-surface-container-lowest/90 backdrop-blur px-3 py-1 rounded-full font-label-md text-label-md text-on-surface">
+                            $800.000 / mes
+                        </div>
+</div>
+<div class="p-stack-md space-y-stack-sm">
+<div class="flex flex-wrap gap-2">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-caption text-caption">Apartamento</span>
+<span class="bg-surface-container text-on-surface-variant px-3 py-1 rounded-full font-caption text-caption">2 Habitaciones</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Apartamento independiente</h3>
+<div class="flex items-center gap-2 font-body-md text-body-md text-on-surface">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="">Engativá, Bogotá</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+                            Acogedor apartamento de dos habitaciones, cocina sencilla y baño propio. Cerca de vías principales y transporte.
+                        </p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden soft-shadow group hover:-translate-y-1 transition-transform duration-300">
+<div class="aspect-video w-full relative overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A candid, warm photograph of a neighborhood street in Colombia during late afternoon. The golden hour light casts long shadows across paved streets, highlighting colorful but muted facades of humble homes. Neighbors are interacting casually in the background. The mood is authentic, lived-in, and community-focused, avoiding clinical real estate aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmEW_IajoRHawGO4TM9Xx91i_dbtMfu-EYm9K7ByW8g_BuWz3-XOIzC03lI1goqFZqgS230qfJIx3mokVzgTC1xj76QA6UGQP35TxzdgaKSHFNIA6HYiX1NWHmLPEWbZSjieHYig73y-HJ2KysZxRtyMY3ucuY2MXaOpnvaptP1NisvdodFPhiuzVazjr8sV55FfdY_LRNSQ4V1IIj6F4MEHyUaARfZVVNdTiNob_KcyqVi6WS2uSD">
+<div class="absolute top-4 right-4 bg-surface-container-lowest/90 backdrop-blur px-3 py-1 rounded-full font-label-md text-label-md text-on-surface">
+                            $600.000 / mes
+                        </div>
+</div>
+<div class="p-stack-md space-y-stack-sm">
+<div class="flex flex-wrap gap-2">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-caption text-caption">Estudio</span>
+<span class="bg-surface-container text-on-surface-variant px-3 py-1 rounded-full font-caption text-caption">Amoblado</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Estudio acogedor cerca al centro</h3>
+<div class="flex items-center gap-2 font-body-md text-body-md text-on-surface">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="">San Antonio, Cali</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+                            Pequeño estudio amoblado, perfecto para una persona. Cuenta con cocineta, baño privado y zona de ropas compartida.
+                        </p>
+</div>
+</div>
+</div>
+<div class="flex justify-center pt-stack-md">
+<button class="border-2 border-sage-muted text-on-surface font-label-md text-label-md px-stack-lg py-3 rounded-lg hover:border-primary hover:text-primary active:scale-95 transition-all duration-150">
+                    Ver más viviendas
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-section-gap bg-surface-container dark:bg-surface-container-highest flat no shadows border-t border-outline-variant dark:border-outline">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg max-w-[1200px] mx-auto w-full gap-stack-md">
+<div class="font-headline-sm text-headline-sm text-on-surface dark:text-on-surface">
+                Colombia Abriga
+            </div>
+<div class="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md text-center md:text-left">
+                © 2024 Colombia Abriga. Una iniciativa ciudadana para la vivienda solidaria.
+            </div>
+<div class="flex items-center gap-stack-md font-body-md text-body-md text-secondary dark:text-secondary-fixed-dim">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors opacity-90 hover:opacity-100 transition-opacity" href="#">
+                    Privacidad
+                </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors opacity-90 hover:opacity-100 transition-opacity" href="#">
+                    Términos
+                </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors opacity-90 hover:opacity-100 transition-opacity" href="#">
+                    Contacto
+                </a>
+</div>
+</div>
+</footer>
+
+
+</body></html>

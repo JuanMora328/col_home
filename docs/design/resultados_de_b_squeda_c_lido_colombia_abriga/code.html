@@ -1,0 +1,263 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Colombia Abriga - Viviendas disponibles</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#5c4300",
+                      "on-surface": "#1c1c19",
+                      "on-primary-fixed-variant": "#7d2d00",
+                      "on-secondary-fixed-variant": "#364e00",
+                      "secondary": "#496800",
+                      "on-tertiary-container": "#fffbff",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#f0ede9",
+                      "surface-parchment": "#fdfaf5",
+                      "surface": "#fcf9f4",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#dcc1b6",
+                      "surface-variant": "#e5e2dd",
+                      "surface-dim": "#dcdad5",
+                      "inverse-primary": "#ffb597",
+                      "on-error": "#ffffff",
+                      "inverse-on-surface": "#f3f0eb",
+                      "on-surface-variant": "#56423b",
+                      "tertiary-container": "#956e00",
+                      "outline": "#897269",
+                      "secondary-fixed-dim": "#add461",
+                      "primary": "#9a4113",
+                      "on-secondary-container": "#4e6e00",
+                      "surface-tint": "#9d4315",
+                      "on-secondary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "secondary-container": "#c8f17a",
+                      "on-primary-container": "#fffbff",
+                      "charcoal-text": "#2d2d2a",
+                      "tertiary-fixed": "#ffdfa0",
+                      "background": "#fcf9f4",
+                      "on-primary-fixed": "#360f00",
+                      "secondary-fixed": "#c8f17a",
+                      "primary-fixed": "#ffdbcd",
+                      "on-background": "#1c1c19",
+                      "sage-muted": "#8ba888",
+                      "surface-container-low": "#f6f3ee",
+                      "primary-fixed-dim": "#ffb597",
+                      "tertiary-fixed-dim": "#f6be39",
+                      "surface-bright": "#fcf9f4",
+                      "surface-container-highest": "#e5e2dd",
+                      "surface-container-high": "#eae8e3",
+                      "primary-container": "#ba582a",
+                      "inverse-surface": "#31302d",
+                      "tertiary": "#765700",
+                      "on-tertiary-fixed": "#261a00",
+                      "error": "#ba1a1a",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#131f00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-lg": "48px",
+                      "unit": "8px",
+                      "section-gap": "80px",
+                      "margin-desktop": "48px",
+                      "stack-sm": "12px",
+                      "stack-md": "24px",
+                      "gutter": "24px",
+                      "margin-mobile": "20px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Montserrat"],
+                      "headline-md": ["Montserrat"],
+                      "body-md": ["Inter"],
+                      "display-lg-mobile": ["Montserrat"],
+                      "headline-sm": ["Montserrat"],
+                      "headline-md-mobile": ["Montserrat"],
+                      "body-lg": ["Inter"],
+                      "caption": ["Inter"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                      "headline-md": ["32px", { "lineHeight": "1.3", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                      "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                      "display-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                      "headline-sm": ["20px", { "lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                      "headline-md-mobile": ["24px", { "lineHeight": "1.3", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                      "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                      "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                      "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }]
+              }
+            }
+          }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .soft-shadow { box-shadow: 0 10px 40px -10px rgba(192, 93, 46, 0.08); }
+    </style>
+</head>
+<body class="bg-surface-parchment text-on-surface font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky bg-surface-parchment z-50">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-md max-w-[1200px] mx-auto">
+<a class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary" href="#">Colombia Abriga</a>
+<nav class="hidden md:flex gap-stack-md items-center font-body-md text-body-md">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 transition-colors duration-200" href="#">Encontrar vivienda</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Nuestra misión</a>
+<a class="ml-stack-md px-6 py-3 bg-primary text-on-primary rounded-lg font-label-md text-label-md active:scale-95 transition-transform duration-150 shadow-sm hover:bg-surface-tint" href="#">Publicar vivienda</a>
+</nav>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+<!-- Search Header & Filters -->
+<div class="mb-stack-lg">
+<nav class="flex items-center gap-2 text-primary font-label-md text-label-md mb-4 cursor-pointer hover:text-surface-tint transition-colors"><span class="material-symbols-outlined text-[18px]">arrow_back</span><span class="">Volver al inicio</span></nav><h1 class="font-headline-md-mobile md:font-headline-md text-headline-md-mobile md:text-headline-md text-on-surface mb-stack-sm">Viviendas disponibles en Cali, Valle del Cauca</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg">Encontramos 24 hogares dispuestos a recibirte.</p>
+<!-- Filters Bar -->
+<div class="bg-surface-container rounded-xl p-4 flex flex-wrap gap-4 items-center soft-shadow border-2 border-outline-variant">
+<div class="flex-grow min-w-[200px]">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">location_on</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border-2 border-surface-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-0 transition-colors" placeholder="Ubicación" type="text" value="Cali, Valle del Cauca">
+</div>
+</div>
+<select class="px-4 py-3 bg-surface-container-lowest border-2 border-surface-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-0 transition-colors">
+<option>Presupuesto Máx</option>
+<option>$500.000</option>
+<option>$1.000.000</option>
+</select>
+<select class="px-4 py-3 bg-surface-container-lowest border-2 border-surface-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-0 transition-colors">
+<option>Tipo de Vivienda</option>
+<option>Habitación</option>
+<option>Apartamento entero</option>
+</select>
+<select class="px-4 py-3 bg-surface-container-lowest border-2 border-surface-variant rounded-lg font-body-md text-on-surface focus:border-primary focus:ring-0 transition-colors">
+<option>Habitaciones</option>
+<option>1+</option>
+<option>2+</option>
+</select>
+<button class="px-6 py-3 bg-secondary text-on-secondary rounded-lg font-label-md text-label-md active:scale-95 transition-transform duration-150 flex items-center gap-2 font-bold">
+<span class="material-symbols-outlined">filter_list</span>
+                    Filtrar
+                </button>
+</div>
+</div>
+<!-- Property Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Card 1: Solidario (Free) -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden soft-shadow transition-transform hover:-translate-y-1 duration-300 flex flex-col cursor-pointer group">
+<div class="relative h-48 w-full">
+<img class="w-full h-full object-cover" data-alt="A sunlit, modest but extremely clean and welcoming bedroom in a Colombian home. Sunlight streams through a window, illuminating crisp white sheets and warm terracotta floor tiles. The atmosphere is peaceful, secure, and deeply human, embodying grassroots community support. High-key lighting, organic minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEcmOKRtt-7Cdn6DtG97bQwkXtVoiMsuXpv_3PJWM2ge0JWBw2ZUzu68ao_XL2GAMvx7qwnU5FwCvO7tcZyEQ4e5kR-YKhyH6U6_u0vRhm3Rb89pkHQE_H-Qec76WL0zUMAlmxO5EKvZy2HKeUXgxZth7quF-j0RPg9Yj9TpINFixa_tgf9xiiufSzJD8Kez6cfqT0ALDFpesLtXqc1Z7oEhL1nD_pJ5YHkzINgiOUkJhVxF08h1HX">
+<div class="absolute top-3 left-3 bg-secondary text-on-secondary px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1 shadow-sm font-bold">
+<span class="material-symbols-outlined text-[16px]">favorite</span>
+                        Solidario
+                    </div>
+</div>
+<div class="p-stack-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Habitación Privada en Casa Familiar</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[18px]">location_on</span>
+                        San Fernando, Cali
+                    </p>
+<div class="flex flex-wrap gap-2 mb-stack-md">
+<span class="bg-surface-container text-charcoal-text px-3 py-1 rounded-full font-caption text-caption">1 Habitación</span>
+<span class="bg-surface-container text-charcoal-text px-3 py-1 rounded-full font-caption text-caption">Baño compartido</span>
+<span class="bg-surface-container text-charcoal-text px-3 py-1 rounded-full font-caption text-caption">Wi-Fi</span>
+</div>
+<div class="mt-auto flex justify-between items-end border-t border-surface-variant pt-4">
+<div>
+<span class="block font-label-md text-label-md text-secondary">Alojamiento gratuito</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">$0 <span class="font-body-md text-body-md text-on-surface-variant">/ mes</span></span>
+</div>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</article>
+<!-- Card 2: Subsidized -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden soft-shadow transition-transform hover:-translate-y-1 duration-300 flex flex-col cursor-pointer group">
+<div class="relative h-48 w-full">
+<img class="w-full h-full object-cover" data-alt="A cozy, sun-drenched studio apartment living area. Simple wooden furniture, a small woven rug on terracotta tiles, and a healthy potted plant by a large window. The space feels safe, accessible, and grounded, avoiding corporate sterility. Warm lighting, organic minimalist style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHuVBN689a-ePTYsJpwAJmVinRKjYtAD7NEBGW8AEADUZfwSs-OCVSPNqkbTZveV6A1iCgFFtY4JT3_LhqqI_uk3VSFna9VUPfAxhlhr_56cJ570X8iuPQC1UPWsuQOQAgGOsQYouFkMk_wH7K0xVpJJf86E3tXQPby4r6LlWpSI2-NXcddL6-juAe8lV_v_f87niWKkLNNJ0b7vhVpAOG9-NTNnnGa_2AtODkjcH6OmCLDaiVHmdA">
+</div>
+<div class="p-stack-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Apartaestudio Independiente</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[18px]">location_on</span>
+                        El Ingenio, Cali
+                    </p>
+<div class="flex flex-wrap gap-2 mb-stack-md">
+<span class="bg-surface-container text-charcoal-text px-3 py-1 rounded-full font-caption text-caption">Estudio</span>
+<span class="bg-surface-container text-charcoal-text px-3 py-1 rounded-full font-caption text-caption">Baño privado</span>
+<span class="bg-surface-container text-charcoal-text px-3 py-1 rounded-full font-caption text-caption">Servicios inc.</span>
+</div>
+<div class="mt-auto flex justify-between items-end border-t border-surface-variant pt-4">
+<div>
+<span class="block font-label-md text-label-md text-on-surface-variant">Tarifa accesible</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">$350.000 <span class="font-body-md text-body-md text-on-surface-variant">/ mes</span></span>
+</div>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</article>
+<!-- Card 3: Room -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden soft-shadow transition-transform hover:-translate-y-1 duration-300 flex flex-col cursor-pointer group">
+<div class="relative h-48 w-full">
+<img class="w-full h-full object-cover" data-alt="A bright, airy room with a comfortable bed and a small desk. Soft sunlight filters through light curtains, highlighting natural wood accents and clean, simple decor. The environment communicates trust, neighborhood warmth, and approachability. High-key lighting, soft organic textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQXAUJPmOkJKg69voOOnYFVLurZbXtGC7rPg47qN0upytkBGIgO1zA0bFML-IWQUZTr6Daz2hrPUGohlOHPPRzpHCjfebbM2eGLYP05wgWLEaoGEQMx8IaImsWSmZmpVQFIrYdhrk0_QQGfo7xv0gguIRkdHuioPJtKy2bUug6C3lTxUY9KMiDheAE6xckwqc6lbyjz49AjZ3qXGipC6XjVYYQt3_T9KBem5ykLA-BBUCJFTutqhJZ">
+</div>
+<div class="p-stack-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Habitación Amplia y Luminosa</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[18px]">location_on</span>
+                        Ciudad Jardín, Cali
+                    </p>
+<div class="flex flex-wrap gap-2 mb-stack-md">
+<span class="bg-surface-container text-charcoal-text px-3 py-1 rounded-full font-caption text-caption">1 Habitación</span>
+<span class="bg-surface-container text-charcoal-text px-3 py-1 rounded-full font-caption text-caption">Baño compartido</span>
+</div>
+<div class="mt-auto flex justify-between items-end border-t border-surface-variant pt-4">
+<div>
+<span class="block font-label-md text-label-md text-on-surface-variant">Tarifa accesible</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">$280.000 <span class="font-body-md text-body-md text-on-surface-variant">/ mes</span></span>
+</div>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-section-gap bg-surface-container">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-lg border-t border-outline-variant max-w-[1200px] mx-auto w-full">
+<span class="font-headline-sm text-headline-sm text-on-surface mb-4 md:mb-0">© 2024 Colombia Abriga. Una iniciativa ciudadana para la vivienda solidaria.</span>
+<nav class="flex gap-stack-md font-body-md text-body-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors opacity-90 hover:opacity-100" href="#">Privacidad</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors opacity-90 hover:opacity-100" href="#">Términos</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors opacity-90 hover:opacity-100" href="#">Contacto</a>
+</nav>
+</div>
+</footer>
+
+
+</body></html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Publica una vivienda disponible - Colombia Abriga</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#5c4300",
+                      "on-surface": "#1c1c19",
+                      "on-primary-fixed-variant": "#7d2d00",
+                      "on-secondary-fixed-variant": "#364e00",
+                      "secondary": "#496800",
+                      "on-tertiary-container": "#fffbff",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#f0ede9",
+                      "surface-parchment": "#fdfaf5",
+                      "surface": "#fcf9f4",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#dcc1b6",
+                      "surface-variant": "#e5e2dd",
+                      "surface-dim": "#dcdad5",
+                      "inverse-primary": "#ffb597",
+                      "on-error": "#ffffff",
+                      "inverse-on-surface": "#f3f0eb",
+                      "on-surface-variant": "#56423b",
+                      "tertiary-container": "#956e00",
+                      "outline": "#897269",
+                      "secondary-fixed-dim": "#add461",
+                      "primary": "#9a4113",
+                      "on-secondary-container": "#4e6e00",
+                      "surface-tint": "#9d4315",
+                      "on-secondary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "secondary-container": "#c8f17a",
+                      "on-primary-container": "#fffbff",
+                      "charcoal-text": "#2d2d2a",
+                      "tertiary-fixed": "#ffdfa0",
+                      "background": "#fcf9f4",
+                      "on-primary-fixed": "#360f00",
+                      "secondary-fixed": "#c8f17a",
+                      "primary-fixed": "#ffdbcd",
+                      "on-background": "#1c1c19",
+                      "sage-muted": "#8ba888",
+                      "surface-container-low": "#f6f3ee",
+                      "primary-fixed-dim": "#ffb597",
+                      "tertiary-fixed-dim": "#f6be39",
+                      "surface-bright": "#fcf9f4",
+                      "surface-container-highest": "#e5e2dd",
+                      "surface-container-high": "#eae8e3",
+                      "primary-container": "#ba582a",
+                      "inverse-surface": "#31302d",
+                      "tertiary": "#765700",
+                      "on-tertiary-fixed": "#261a00",
+                      "error": "#ba1a1a",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#131f00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-lg": "48px",
+                      "unit": "8px",
+                      "section-gap": "80px",
+                      "margin-desktop": "48px",
+                      "stack-sm": "12px",
+                      "stack-md": "24px",
+                      "gutter": "24px",
+                      "margin-mobile": "20px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Montserrat"
+                      ],
+                      "headline-md": [
+                              "Montserrat"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "display-lg-mobile": [
+                              "Montserrat"
+                      ],
+                      "headline-sm": [
+                              "Montserrat"
+                      ],
+                      "headline-md-mobile": [
+                              "Montserrat"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Form Field Styles */
+        .form-input-base {
+            @apply w-full px-4 py-3 bg-surface-container-lowest border-2 border-outline-variant rounded-xl focus:border-primary focus:ring-0 transition-colors font-body-md text-on-surface;
+        }
+        .form-label {
+            @apply block mb-2 font-label-md text-on-surface-variant;
+        }
+    </style>
+</head>
+<body class="bg-surface-parchment text-on-surface min-h-screen flex flex-col font-body-md">
+<!-- TopNavBar -->
+<header class="bg-surface-parchment dark:bg-inverse-surface w-full top-0 sticky z-50 transition-colors duration-200">
+<div class="flex justify-between items-center px-margin-desktop py-stack-md max-w-[1200px] mx-auto hidden md:flex">
+<a class="font-display-lg text-display-lg text-primary dark:text-primary-fixed-dim" href="#">
+                Colombia Abriga
+            </a>
+<nav class="flex gap-stack-md">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors duration-200 px-3 py-2 rounded-lg font-label-md text-label-md" href="#">Encontrar vivienda</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors duration-200 px-3 py-2 rounded-lg font-label-md text-label-md" href="#">Nuestra misión</a>
+</nav>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-xl hover:bg-primary-container transition-colors active:scale-95 duration-150">
+                Publicar vivienda
+            </button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow px-margin-mobile md:px-margin-desktop py-stack-lg max-w-[800px] mx-auto w-full">
+<div class="mb-section-gap text-center md:text-left">
+<h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-surface mb-stack-sm">Publica una vivienda disponible</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Comparte tu espacio para ayudar a construir comunidad. Por favor, proporciona detalles precisos para facilitar el encuentro.</p>
+</div>
+<form class="space-y-section-gap">
+<!-- Section: Información Básica -->
+<section class="p-stack-md md:p-stack-lg rounded-xl shadow-sm border border-surface-container bg-surface-container-low">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-stack-md border-b border-surface-variant pb-2">Información Básica</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<div>
+<label class="form-label text-on-surface" for="propertyType">Tipo de Inmueble</label>
+<select class="form-input-base appearance-none font-display-lg-mobile" id="propertyType">
+<option value="">Selecciona una opción</option>
+<option value="apartamento">Apartamento</option>
+<option value="casa">Casa</option>
+<option value="habitacion">Habitación</option>
+<option value="lote">Lote/Terreno</option>
+</select>
+</div>
+<div>
+<label class="form-label text-on-surface" for="availability">Disponibilidad</label>
+<select class="form-input-base appearance-none font-display-lg-mobile" id="availability">
+<option value="inmediata">Inmediata</option>
+<option value="proximo_mes">Próximo mes</option>
+<option value="por_acordar">Por acordar</option>
+</select>
+</div>
+<div class="md:col-span-2">
+<label class="form-label text-on-surface" for="price">Precio mensual (COP)</label><p class="text-caption font-caption text-primary mb-2">Deja en 0 si es gratuito</p>
+<div class="relative">
+<span class="absolute left-4 top-3 text-on-surface-variant font-body-md">$</span>
+<input class="form-input-base pl-8 font-display-lg-mobile" id="price" placeholder="Ej. 800000" type="number"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Ubicación -->
+<section class="p-stack-md md:p-stack-lg rounded-xl shadow-sm border border-surface-container bg-surface-container-low">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-stack-md border-b border-surface-variant pb-2">Ubicación</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<div>
+<label class="form-label text-on-surface" for="department">Departamento</label>
+<select class="form-input-base appearance-none font-display-lg-mobile" id="department">
+<option value="">Seleccionar</option>
+<option value="antioquia">Antioquia</option>
+<option value="cundinamarca">Cundinamarca</option>
+<option value="valle">Valle del Cauca</option>
+</select>
+</div>
+<div>
+<label class="form-label text-on-surface" for="city">Ciudad/Municipio</label>
+<select class="form-input-base appearance-none font-display-lg-mobile" id="city">
+<option value="">Seleccionar</option>
+<option value="medellin">Medellín</option>
+<option value="bogota">Bogotá</option>
+<option value="cali">Cali</option>
+</select>
+</div>
+<div class="md:col-span-2">
+<label class="form-label text-on-surface" for="neighborhood">Barrio / Vereda</label>
+<input class="form-input-base font-display-lg-mobile" id="neighborhood" placeholder="Ej. El Poblado" type="text"/>
+</div>
+</div>
+</section><section class="bg-surface-container-low p-stack-md md:p-stack-lg rounded-xl shadow-sm border border-surface-container"><h2 class="font-headline-sm text-headline-sm text-on-surface mb-stack-md border-b border-surface-variant pb-2">Fotos del Inmueble</h2><div class="border-2 border-dashed border-outline-variant rounded-xl p-stack-lg text-center hover:bg-surface-container-high hover:border-primary transition-all cursor-pointer bg-surface-container-lowest"><span class="material-symbols-outlined text-primary text-display-lg mb-stack-sm">add_a_photo</span><p class="font-body-lg text-on-surface">Haz clic o arrastra tus fotos aquí</p><p class="font-caption text-on-surface-variant mt-2">Máximo 5 fotos (JPG, PNG)</p></div></section>
+<!-- Form Actions -->
+<div class="pt-stack-md border-t border-surface-variant flex justify-end gap-stack-sm mt-stack-lg">
+<button class="px-6 py-4 rounded-xl border border-outline-variant text-on-surface-variant font-display-lg-mobile text-label-md hover:bg-surface-container-high transition-all active:scale-95" type="button">
+                    Guardar borrador
+                </button>
+<button class="px-8 py-4 rounded-xl bg-primary text-on-primary font-display-lg-mobile text-label-md hover:opacity-90 transition-all shadow-sm active:scale-95" type="submit">
+                    Publicar vivienda
+                </button>
+</div>
+</form>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-container-highest w-full mt-section-gap border-t border-outline-variant dark:border-outline">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-lg max-w-[1200px] mx-auto gap-stack-md">
+<span class="font-headline-sm text-headline-sm text-on-surface dark:text-on-surface">Colombia Abriga</span>
+<nav class="flex gap-stack-md">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors opacity-90 hover:opacity-100" href="#">Privacidad</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors opacity-90 hover:opacity-100" href="#">Términos</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors opacity-90 hover:opacity-100" href="#">Contacto</a>
+</nav>
+<span class="font-caption text-caption text-secondary dark:text-secondary-fixed-dim">
+                © 2024 Colombia Abriga. Una iniciativa ciudadana para la vivienda solidaria.
+            </span>
+</div>
+</footer>
+</body></html>

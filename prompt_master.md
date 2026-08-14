@@ -1,819 +1,772 @@
-# CONTEXTO DEL PROYECTO
+Actúa como Software Engineer Senior especializado en Next.js, TypeScript,
+arquitectura web, UI/UX implementation y seguridad.
 
-Vamos a desarrollar una página web provisionalmente llamada **Colombia Abriga**.
+Vas a trabajar sobre un proyecto Next.js YA EXISTENTE.
 
-El nombre debe estar centralizado para poder cambiarlo fácilmente posteriormente.
+NO inicialices otro proyecto.
+NO reemplaces la configuración actual innecesariamente.
+NO migres a otro framework.
+NO crees otro repositorio.
 
-La plataforma nace como una iniciativa solidaria para facilitar que personas en Colombia que necesitan encontrar vivienda rápidamente puedan conectarse con personas que tienen apartamentos, casas o habitaciones disponibles.
+Antes de modificar cualquier archivo, inspecciona completamente el repositorio.
 
-## Objetivo principal
+======================================================================
+PROYECTO
+======================================================================
 
-La plataforma debe hacer exclusivamente tres cosas:
+Nombre provisional:
 
-**PUBLICAR → ENCONTRAR → CONTACTAR**
+Colombia Abriga
 
-No debemos convertir este producto en un portal inmobiliario complejo.
+Es una página web solidaria enfocada exclusivamente en Colombia que conecta
+personas que necesitan encontrar vivienda con personas que tienen una casa,
+apartamento o habitación disponible.
 
-La simplicidad, velocidad de desarrollo, facilidad de uso y seguridad son las prioridades principales.
+La plataforma tiene únicamente tres objetivos:
 
----
+PUBLICAR → ENCONTRAR → CONTACTAR
 
-# MENSAJE PRINCIPAL
+Este principio define todo el alcance del proyecto.
 
-Título:
+NO queremos desarrollar un portal inmobiliario completo.
 
-**Encuentra un hogar cerca de ti**
+======================================================================
+TIPO DE PRODUCTO
+======================================================================
 
-Descripción:
-
-**Una forma sencilla de conectar personas que necesitan vivienda con quienes tienen un espacio disponible.**
-
----
-
-# TIPO DE PRODUCTO
-
-Debe ser una página web.
+Es un SITIO WEB construido con Next.js.
 
 NO es:
 
-* aplicación móvil;
-* PWA;
-* aplicación instalable.
+- aplicación móvil;
+- PWA;
+- aplicación instalable;
+- aplicación nativa.
 
-Debe funcionar correctamente desde navegadores desktop, tablets y teléfonos mediante responsive web design.
+Debe funcionar correctamente en:
 
-La experiencia debe ser especialmente sencilla de utilizar.
+- desktop;
+- laptop;
+- tablet;
+- teléfonos mediante responsive web design.
 
----
+La referencia visual principal fue diseñada desktop-first.
 
-# STACK
+======================================================================
+STACK
+======================================================================
 
-Utilizar:
+Mantener:
 
-* Next.js con App Router;
-* TypeScript;
-* Tailwind CSS;
-* Supabase PostgreSQL;
-* Supabase Storage;
-* Vercel para deployment.
+- Next.js;
+- App Router;
+- TypeScript;
+- Tailwind CSS;
+- ESLint.
 
-Frontend y lógica server-side deben permanecer dentro del mismo proyecto Next.js.
+Posteriormente integraremos:
 
-NO crear un backend NestJS.
+- Supabase PostgreSQL;
+- Supabase Storage;
+- Vercel.
 
-NO crear microservicios.
+Frontend y lógica server-side permanecerán dentro del mismo proyecto Next.js.
 
----
+NO crear:
 
-# ALCANCE ESTRICTO
+- NestJS;
+- Express separado;
+- microservicios;
+- backend independiente.
 
-El MVP solamente necesita permitir:
+======================================================================
+FUENTES DE VERDAD
+======================================================================
+
+Existen referencias visuales provenientes de Google Stitch dentro de:
+
+docs/design/
+
+Debes inspeccionar COMPLETAMENTE:
+
+docs/design/DESIGN.md
+
+y:
+
+docs/design/references/
+
+También puedes inspeccionar otras carpetas/exportaciones de Stitch que existan
+dentro de docs/design/.
+
+IMPORTANTE:
+
+El diseño de Stitch es la FUENTE DE VERDAD VISUAL.
+
+Esto incluye:
+
+- lenguaje visual;
+- paleta;
+- tipografía;
+- tamaños;
+- espacios;
+- containers;
+- border radius;
+- botones;
+- inputs;
+- selects;
+- cards;
+- shadows;
+- composición;
+- jerarquía;
+- estética general.
+
+Sin embargo:
+
+EL DISEÑO DE STITCH NO ES LA FUENTE DE VERDAD FUNCIONAL.
+
+Si existe contradicción entre una captura de Stitch y esta especificación:
+
+LA ESPECIFICACIÓN FUNCIONAL TIENE PRIORIDAD.
+
+No agregues funcionalidades solamente porque aparezcan en una captura.
+
+No copies código exportado por Stitch ciegamente.
+
+Reimplementa correctamente el diseño utilizando la arquitectura,
+componentes y patrones del proyecto Next.js.
+
+======================================================================
+DIRECCIÓN VISUAL
+======================================================================
+
+La interfaz debe conservar el estilo observado en las referencias Stitch.
+
+Debe transmitir:
+
+- solidaridad;
+- calidez;
+- confianza;
+- humanidad;
+- tranquilidad;
+- Colombia;
+- sencillez.
+
+Mantener aproximadamente la dirección visual actual:
+
+- fondo cálido/claro;
+- identidad naranja/terracota;
+- acentos verdes cuando corresponda;
+- cards limpias;
+- tipografía fuerte;
+- mucho whitespace;
+- forms claros;
+- bordes y sombras discretas;
+- fotografías con protagonismo.
+
+No convertir el diseño en:
+
+- SaaS;
+- dashboard;
+- fintech;
+- página gubernamental;
+- portal inmobiliario corporativo;
+- landing comercial exagerada.
+
+Evitar:
+
+- glassmorphism;
+- gradientes innecesarios;
+- animaciones excesivas;
+- efectos 3D;
+- interfaces recargadas.
+
+======================================================================
+MENSAJE PRINCIPAL
+======================================================================
+
+Título:
+
+Encuentra un hogar cerca de ti
+
+Descripción:
+
+Una forma sencilla de conectar personas que necesitan vivienda con quienes
+tienen un espacio disponible.
+
+======================================================================
+NAVEGACIÓN
+======================================================================
+
+Mantener navegación extremadamente sencilla.
+
+Principalmente:
+
+- Encontrar vivienda
+- Publicar vivienda
+
+No necesitamos una navegación compleja.
+
+Si las referencias Stitch contienen:
+
+"Nuestra misión"
+
+NO es obligatorio implementarlo.
+
+Preferimos eliminarlo si no aporta al flujo:
+
+PUBLICAR → ENCONTRAR → CONTACTAR.
+
+======================================================================
+ALCANCE ESTRICTO
+======================================================================
+
+La plataforma solamente debe permitir:
 
 1. Publicar una vivienda.
 2. Buscar viviendas.
 3. Filtrar viviendas.
-4. Visualizar una vivienda.
+4. Ver información de una vivienda.
 5. Contactar al anunciante mediante WhatsApp.
 
 NO implementar:
 
-* registro;
-* login;
-* perfiles;
-* cuentas;
-* panel de usuario;
-* chat;
-* pagos;
-* reservas;
-* contratos;
-* mapas;
-* geolocalización;
-* favoritos;
-* reviews;
-* comentarios;
-* notificaciones;
-* analytics avanzados;
-* recomendaciones;
-* IA;
-* inmobiliarias;
-* CMS;
-* aplicación móvil;
-* PWA.
+- registro;
+- login;
+- perfiles;
+- cuentas;
+- panel de usuario;
+- favoritos;
+- chat;
+- pagos;
+- reservas;
+- contratos;
+- mapas;
+- geolocalización;
+- reviews;
+- comentarios;
+- notificaciones;
+- sistema de mensajes;
+- recomendaciones;
+- inteligencia artificial;
+- inmobiliarias;
+- analytics avanzados;
+- CMS;
+- aplicación móvil;
+- PWA.
 
-No agregar ninguna funcionalidad que no sea necesaria para:
+NO implementar "Guardar borrador".
 
-PUBLICAR → ENCONTRAR → CONTACTAR.
+Aunque exista visualmente en alguna referencia Stitch:
 
----
+ELIMINAR esa funcionalidad.
 
-# PUBLICACIÓN DE VIVIENDA
+No tenemos cuentas de usuario y no necesitamos drafts.
 
-El formulario debe solicitar:
+======================================================================
+HOME
+======================================================================
 
-* tipo de inmueble;
-* tipo de disponibilidad;
-* departamento;
-* ciudad;
-* barrio;
-* precio mensual;
-* número de habitaciones;
-* número de baños;
-* descripción;
-* nombre de contacto;
-* WhatsApp;
-* fotografías.
+La home debe seguir de cerca la referencia Stitch.
+
+Debe priorizar:
+
+Encuentra un hogar cerca de ti
+
+y debajo:
+
+Una forma sencilla de conectar personas que necesitan vivienda con quienes
+tienen un espacio disponible.
+
+Buscador principal:
+
+- Departamento
+- Ciudad
+- Presupuesto máximo
+
+CTA:
+
+Buscar vivienda
+
+También:
+
+¿Tienes una vivienda disponible?
+
+CTA:
+
+Publicar vivienda
+
+Después:
+
+Viviendas disponibles recientemente.
+
+No crear secciones de marketing adicionales.
+
+======================================================================
+ENCONTRAR
+======================================================================
+
+La búsqueda debe permitir principalmente:
+
+- departamento;
+- ciudad;
+- presupuesto máximo.
+
+Filtros adicionales:
+
+- tipo de inmueble;
+- habitaciones mínimas;
+- tipo de disponibilidad.
 
 Tipos de inmueble:
 
-* APARTMENT
-* HOUSE
-* ROOM
+- Apartamento
+- Casa
+- Habitación
 
-Tipos de disponibilidad:
+Tipo de disponibilidad:
 
-* RENT
-* FREE_TEMPORARY
+- Arriendo
+- Alojamiento temporal gratuito
 
-No solicitar dirección exacta.
+NO agregar características que aparecen accidentalmente en diseños Stitch
+pero no existen funcionalmente.
 
-No solicitar:
+Ejemplos de características que NO debemos agregar:
 
-* número de identificación;
-* información bancaria;
-* documentos;
-* información sensible innecesaria.
+- Wi-Fi;
+- amoblado;
+- servicios incluidos;
+- parqueadero;
+- baño compartido;
+- mascotas;
+- amenities.
 
----
+A menos que posteriormente se solicite explícitamente.
 
-# PRECIO $0
+Cards:
 
-El sistema debe permitir precio mensual igual a $0.
+mostrar únicamente información relevante:
 
-Si el tipo de disponibilidad es RENT y el usuario escribe $0, antes de enviar el formulario debe aparecer una confirmación explícita.
+- fotografía;
+- tipo de inmueble;
+- barrio;
+- ciudad;
+- habitaciones;
+- baños;
+- precio.
 
-Mensaje:
+Si price > 0:
 
-**¿Confirmas que el valor del arriendo es $0?**
+$1.200.000 / mes
 
-Texto:
+Si price = 0:
 
-**Recuerda que al indicar un valor de $0 estás informando que no cobrarás por esta vivienda. Es importante ingresar el valor real para evitar reprocesos y permitir que las personas encuentren rápidamente una vivienda que se ajuste a sus necesidades y posibilidades actuales.**
+mostrar claramente:
+
+ALOJAMIENTO GRATUITO
+
+y:
+
+$0
+
+======================================================================
+PUBLICAR
+======================================================================
+
+Ruta:
+
+/publicar
+
+El formulario debe solicitar:
+
+- Tipo de inmueble
+- Tipo de disponibilidad
+- Departamento
+- Ciudad
+- Barrio
+- Precio mensual
+- Habitaciones
+- Baños
+- Descripción
+- Nombre de contacto
+- WhatsApp
+- Fotografías
+
+Máximo 5 fotografías.
+
+NO pedir dirección exacta.
+
+NO pedir información bancaria.
+
+NO pedir identificación.
+
+NO pedir documentos.
+
+IMPORTANTE:
+
+Algunas referencias Stitch actuales no muestran todos estos campos.
+
+Eso NO significa que deban omitirse.
+
+Añade los campos faltantes respetando exactamente el mismo lenguaje visual
+del diseño existente.
+
+El formulario puede dividirse visualmente en bloques como:
+
+Información básica
+
+Ubicación
+
+Características
+
+Descripción
+
+Contacto
+
+Fotos del inmueble
+
+pero debe continuar siendo un único formulario sencillo.
+
+NO crear wizard ni pasos múltiples.
+
+======================================================================
+TIPO DE DISPONIBILIDAD
+======================================================================
+
+No utilizar simplemente:
+
+"Disponibilidad inmediata"
+
+como se observa en alguna referencia Stitch.
+
+Nuestro modelo funcional necesita:
+
+Tipo de disponibilidad
 
 Opciones:
 
-* Volver y corregir.
-* Sí, confirmo que el valor es $0.
+Arriendo
 
-El formulario NO puede enviarse con:
+Alojamiento temporal gratuito
 
-RENT + $0
+======================================================================
+PRECIO $0
+======================================================================
 
-sin esta confirmación.
+El precio mensual puede ser cero.
 
-Si availability_type es FREE_TEMPORARY:
+Caso 1:
 
-* monthly_price debe ser 0;
-* mostrar claramente al usuario que el alojamiento será publicado como gratuito.
+Tipo de disponibilidad:
 
-Nunca permitir precios negativos.
+ALOJAMIENTO TEMPORAL GRATUITO
 
-La validación debe existir tanto en frontend como server-side.
+Entonces:
 
----
+monthly_price = 0.
 
-# COLOMBIA
+Mostrar:
+
+Este alojamiento será publicado como gratuito.
+
+Caso 2:
+
+Tipo:
+
+ARRIENDO
+
+y precio:
+
+$0
+
+Antes de publicar mostrar confirmación explícita.
+
+Título:
+
+¿Confirmas que el valor del arriendo es $0?
+
+Texto:
+
+Recuerda que al indicar un valor de $0 estás informando que no cobrarás por
+esta vivienda. Es importante ingresar el valor real para evitar reprocesos y
+permitir que las personas encuentren rápidamente una vivienda que se ajuste
+a sus necesidades y posibilidades actuales.
+
+Acciones:
+
+Volver y corregir
+
+Sí, confirmo que el valor es $0
+
+No permitir enviar RENT + 0 sin esta confirmación.
+
+La validación posteriormente deberá existir frontend y server-side.
+
+======================================================================
+DETALLE
+======================================================================
+
+Ruta:
+
+/vivienda/[id]
+
+Mostrar:
+
+- fotografías;
+- tipo de inmueble;
+- tipo de disponibilidad;
+- barrio;
+- ciudad;
+- departamento;
+- precio;
+- habitaciones;
+- baños;
+- descripción;
+- nombre del contacto.
+
+No mostrar dirección exacta.
+
+CTA principal:
+
+Contactar por WhatsApp
+
+Mensaje conceptual:
+
+Hola, vi tu vivienda publicada en Colombia Abriga. Estoy interesado en la
+vivienda ubicada en [BARRIO], [CIUDAD]. ¿Sigue disponible?
+
+No implementar chat.
+
+======================================================================
+MODERACIÓN
+======================================================================
+
+No crear panel administrativo.
+
+Toda publicación nueva posteriormente se guardará:
+
+PENDING
+
+Solo publicaciones:
+
+PUBLISHED
+
+aparecerán públicamente.
+
+Inicialmente la aprobación será manual desde Supabase.
+
+No desarrollar UI administrativa.
+
+======================================================================
+COLOMBIA
+======================================================================
 
 La plataforma funciona exclusivamente para Colombia.
 
-Los selectores deben funcionar:
+Selector:
 
 Departamento
 →
 Ciudad
 
-Utilizar códigos oficiales DIVIPOLA.
+Posteriormente utilizaremos datos oficiales DIVIPOLA.
 
-NO inventar departamentos.
+No inventes municipios.
 
-NO inventar municipios.
+No inventes departamentos.
 
-NO generar manualmente códigos geográficos.
+No inventes códigos.
 
-Los datos deben almacenarse localmente en el proyecto en una estructura apropiada como:
+Los datos se manejarán desde el proyecto de forma local, probablemente:
 
-`src/data/colombia.json`
+src/data/colombia.json
 
-La fuente debe documentarse.
+pero la implementación real se realizará en una fase posterior.
 
-Los códigos oficiales deben utilizarse como identificadores.
+======================================================================
+ARQUITECTURA
+======================================================================
 
----
+Mantener la arquitectura sencilla.
 
-# BÚSQUEDA
+Una estructura conceptual apropiada sería:
 
-La búsqueda principal debe permitir:
+src/
+  app/
+  components/
+  lib/
+  data/
+  types/
+  actions/
 
-* departamento;
-* ciudad;
-* presupuesto máximo.
-
-Filtros adicionales:
-
-* tipo de inmueble;
-* mínimo de habitaciones;
-* tipo de disponibilidad.
-
-El filtro debe realizarse en servidor/base de datos.
-
-NO traer todas las viviendas al navegador para filtrarlas en JavaScript.
-
-Solo mostrar publicaciones:
-
-`status = PUBLISHED`
-
-Orden inicial:
-
-más recientes primero.
-
-Debe existir paginación si la cantidad de resultados lo requiere.
-
----
-
-# LISTADO
-
-Cada card debe mostrar únicamente información importante:
-
-* fotografía principal;
-* tipo de inmueble;
-* barrio;
-* ciudad;
-* habitaciones;
-* baños;
-* precio.
-
-Si monthly_price es mayor que 0:
-
-mostrar precio colombiano formateado.
-
-Ejemplo:
-
-`$1.200.000 / mes`
-
-Si monthly_price es 0:
-
-mostrar claramente:
-
-`ALOJAMIENTO GRATUITO`
-
-y:
-
-`$0`
-
-No esconder que el precio es cero.
-
----
-
-# DETALLE
-
-Ruta conceptual:
-
-`/vivienda/[id]`
-
-Mostrar:
-
-* fotografías;
-* tipo;
-* tipo de disponibilidad;
-* barrio;
-* ciudad;
-* departamento;
-* precio;
-* habitaciones;
-* baños;
-* descripción;
-* nombre del contacto.
-
-No mostrar dirección exacta.
-
-Botón principal:
-
-**Contactar por WhatsApp**
-
-El enlace debe generar un mensaje similar a:
-
-**Hola, vi tu vivienda publicada en Colombia Abriga. Estoy interesado en la vivienda ubicada en [BARRIO], [CIUDAD]. ¿Sigue disponible?**
-
-El teléfono debe normalizarse correctamente.
-
-No construir chat interno.
-
----
-
-# MODERACIÓN DEL MVP
-
-No desarrollar panel administrativo inicialmente.
-
-Toda publicación nueva debe guardarse obligatoriamente como:
-
-`PENDING`
-
-Una publicación solamente aparece públicamente cuando:
-
-`status = PUBLISHED`
-
-Durante el MVP inicial, el administrador podrá aprobar manualmente publicaciones desde Supabase.
-
-Nunca aceptar `status` proveniente del formulario público.
-
-El servidor debe forzar siempre:
-
-`status = PENDING`
-
-al crear una publicación.
-
----
-
-# MODELO DE DATOS
-
-Mantenerlo deliberadamente sencillo.
-
-## listings
-
-Debe contener aproximadamente:
-
-* id UUID;
-* property_type;
-* availability_type;
-* department_code;
-* department_name;
-* city_code;
-* city_name;
-* neighborhood;
-* monthly_price;
-* bedrooms;
-* bathrooms;
-* description;
-* contact_name;
-* contact_phone;
-* status;
-* created_at;
-* updated_at.
-
-Estados mínimos:
-
-* PENDING
-* PUBLISHED
-* INACTIVE
-
-Agregar únicamente campos adicionales que sean realmente necesarios técnicamente.
-
-No sobrearquitecturar el modelo.
-
----
-
-## listing_images
-
-* id UUID;
-* listing_id UUID;
-* storage_path;
-* sort_order;
-* created_at.
-
-Relacionar correctamente con listings.
-
----
-
-# IMÁGENES
-
-Utilizar Supabase Storage.
-
-Crear bucket apropiado para fotografías de viviendas.
-
-Definir límites.
-
-Inicialmente:
-
-* máximo 5 fotografías;
-* solo formatos seguros de imagen;
-* validar MIME type;
-* definir tamaño máximo razonable;
-* generar nombres únicos;
-* nunca confiar en el nombre original del archivo.
-
-Optimizar su visualización en Next.js.
-
----
-
-# SEGURIDAD
-
-El usuario no necesita autenticarse para publicar durante este MVP.
-
-Por lo tanto, las operaciones sensibles deben ejecutarse únicamente server-side.
-
-Nunca exponer una clave privada/secret key de Supabase al navegador.
-
-Nunca permitir que el cliente determine:
-
-* status;
-* IDs internos;
-* rutas arbitrarias de Storage;
-* campos administrativos.
-
-Validar todos los datos server-side.
-
-Configurar Row Level Security cuando corresponda.
-
-Las consultas públicas solamente deben poder obtener publicaciones PUBLISHED.
-
-Implementar protección básica contra envíos accidentales o malformados sin introducir servicios complejos innecesarios.
-
-No implementar sistemas externos de seguridad salvo que exista una razón concreta.
-
----
-
-# DISEÑO
-
-El diseño debe transmitir:
-
-* solidaridad;
-* tranquilidad;
-* confianza;
-* claridad;
-* Colombia;
-* facilidad de uso.
-
-Debe sentirse moderno pero sencillo.
-
-No convertirlo en una landing page exageradamente comercial.
+No es obligatorio crear carpetas si todavía no son necesarias.
 
 Evitar:
 
-* exceso de animaciones;
-* efectos innecesarios;
-* glassmorphism excesivo;
-* gradientes exagerados;
-* interfaces recargadas.
+- overengineering;
+- repository pattern innecesario;
+- service layers artificiales;
+- abstracciones prematuras;
+- wrappers innecesarios;
+- arquitecturas empresariales.
 
-Usar:
+Utilizar Server Components por defecto cuando tenga sentido.
 
-* espacios amplios;
-* buena tipografía;
-* cards limpias;
-* botones claros;
-* jerarquía visual fuerte.
+Client Components solamente donde exista interactividad real.
 
-La web debe funcionar correctamente aproximadamente desde 320px hasta pantallas desktop grandes.
+Mantener TypeScript estricto.
 
----
+Evitar any.
 
-# HOME
+======================================================================
+COMPONENTES VISUALES
+======================================================================
 
-La página principal debe priorizar inmediatamente:
+Identifica patrones reutilizables del DESIGN.md y referencias Stitch.
 
-**Encuentra un hogar cerca de ti**
+Probablemente necesitaremos componentes como:
 
-Debajo:
+Header
+Footer
+Container
+Button
+FormField
+Select
+PriceInput
+ListingCard
+SearchForm
+ListingFilters
+
+No crees un design system gigantesco.
+
+Solo extrae componentes cuando exista reutilización real.
+
+======================================================================
+RESPONSIVE
+======================================================================
+
+Las referencias Stitch son principalmente desktop.
 
-**Una forma sencilla de conectar personas que necesitan vivienda con quienes tienen un espacio disponible.**
+Debes mantener fielmente esa composición en desktop.
+
+Para tamaños inferiores, implementar responsive web design razonable.
 
-Después:
+Objetivo aproximado:
 
-* departamento;
-* ciudad;
-* presupuesto máximo;
-* botón Buscar vivienda.
+320px → desktop grande.
 
-También:
+No convertir la versión móvil en una app.
 
-**¿Tienes una vivienda disponible?**
+No agregar:
 
-Botón:
+- bottom navigation;
+- floating buttons;
+- headers de app;
+- navegación móvil tipo aplicación nativa.
 
-**Publicar vivienda**
+Simplemente reorganiza el layout de la página web.
 
-Después se pueden mostrar algunas viviendas recientes.
+======================================================================
+ACCESIBILIDAD
+======================================================================
 
-No agregar secciones de marketing innecesarias.
+Mantener:
 
----
+- labels visibles;
+- controles accesibles;
+- focus states;
+- contraste suficiente;
+- navegación por teclado;
+- semántica HTML;
+- botones reales;
+- inputs correctamente asociados con labels.
 
-# ARQUITECTURA
+No depender exclusivamente del color.
 
-Preferir una estructura simple similar a:
+======================================================================
+REGLAS PARA CODEX
+======================================================================
 
-src/
-app/
-components/
-lib/
-data/
-types/
-actions/
+Antes de cada fase:
 
-Evitar carpetas innecesarias.
+1. Inspecciona el repositorio.
+2. Lee AGENTS.md si existe.
+3. Lee PROJECT.md si existe.
+4. Lee docs/design/DESIGN.md.
+5. Inspecciona docs/design/references/.
+6. Revisa package.json.
+7. Revisa configuración TypeScript.
+8. Revisa configuración Tailwind.
+9. Revisa cambios existentes.
+10. Determina qué archivos realmente deben modificarse.
 
-Usar Server Components por defecto cuando tenga sentido.
+Durante las tareas:
 
-Usar Client Components únicamente para interactividad real.
-
-Mantener los componentes pequeños y comprensibles.
-
-Evitar duplicación.
-
-TypeScript estricto.
-
-No utilizar `any` salvo caso extraordinariamente justificado.
-
----
-
-# VARIABLES DE ENTORNO
-
-Nunca versionar secretos.
-
-Debe existir:
-
-`.env.example`
-
-y:
-
-`.env.local`
-
-debe quedar ignorado por Git.
-
-Validar las variables necesarias.
-
-Centralizar la configuración de Supabase.
-
----
-
-# REGLAS DE TRABAJO PARA CODEX
-
-Antes de modificar código en cada fase:
-
-1. Leer `AGENTS.md`.
-2. Leer `PROJECT.md`.
-3. Inspeccionar el repositorio actual.
-4. Revisar los cambios existentes.
-5. Determinar qué archivos realmente necesitan modificarse.
-
-Durante la implementación:
-
-1. No implementar funcionalidades de fases posteriores.
-2. No modificar código no relacionado.
-3. No agregar dependencias sin necesidad.
-4. No sobrearquitectar.
-5. No generar abstracciones prematuras.
-6. Mantener TypeScript estricto.
-7. Implementar manejo de errores.
-8. Validar entradas.
-9. Mantener seguridad server-side.
-10. Mantener el alcance PUBLICAR → ENCONTRAR → CONTACTAR.
-
-Antes de finalizar cada fase:
-
-1. Revisar los cambios realizados.
-2. Ejecutar lint.
-3. Ejecutar TypeScript typecheck.
-4. Ejecutar tests existentes si aplica.
-5. Ejecutar production build.
-6. Corregir errores encontrados.
-7. Revisar console.log.
-8. Revisar imports sin utilizar.
-9. Revisar código muerto.
-10. Revisar dependencias innecesarias.
-
-Finalmente entregar:
-
-* resumen de lo realizado;
-* archivos principales creados/modificados;
-* comandos ejecutados;
-* resultado de lint;
-* resultado de typecheck;
-* resultado de build;
-* cualquier decisión que deba tomar el desarrollador.
-
----
-
-# FASES DEL PROYECTO
-
-## FASE 0 — Inicialización
-
-Objetivo:
-
-Preparar correctamente el proyecto y establecer las reglas.
-
-Tareas:
-
-* inicializar Next.js;
-* App Router;
-* TypeScript;
-* Tailwind;
-* ESLint;
-* estructura básica;
-* `.gitignore`;
-* `.env.example`;
-* `AGENTS.md`;
-* `PROJECT.md`;
-* layout;
-* configuración del nombre de plataforma;
-* home provisional.
-
-NO integrar todavía Supabase.
-
-NO crear todavía formularios funcionales.
-
-NO implementar búsqueda.
-
-Validar lint, typecheck y build.
-
----
-
-## FASE 1 — Datos y Supabase
-
-Objetivo:
-
-Dejar completamente preparada la persistencia.
-
-Implementar:
-
-* cliente Supabase server-side;
-* variables de entorno;
-* migrations SQL;
-* listings;
-* listing_images;
-* índices;
-* RLS;
-* Storage;
-* bucket de imágenes;
-* políticas de lectura;
-* acceso público únicamente a publicaciones PUBLISHED;
-* creación segura server-side;
-* dataset colombiano basado en DIVIPOLA.
-
-No implementar todavía UI completa.
-
-Proporcionar instrucciones claras para cualquier acción manual necesaria en Supabase.
-
-Validar todo antes de terminar.
-
----
-
-## FASE 2 — Encontrar vivienda
-
-Objetivo:
-
-Completar todo el flujo:
-
-ENCONTRAR.
-
-Implementar:
-
-* Home;
-* departamento;
-* ciudad;
-* precio máximo;
-* búsqueda;
-* `/buscar`;
-* filtros;
-* cards;
-* paginación;
-* empty state;
-* loading;
-* errores;
-* responsive web.
-
-Solo consultar:
-
-`PUBLISHED`
-
-No implementar publicación todavía.
-
----
-
-## FASE 3 — Publicar vivienda
-
-Objetivo:
-
-Completar todo el flujo:
-
-PUBLICAR.
-
-Implementar:
-
-`/publicar`
-
-Formulario completo.
-
-Implementar:
-
-* validaciones;
-* departamento/ciudad;
-* precio;
-* confirmación $0;
-* alojamiento gratuito;
-* fotografías;
-* Supabase Storage;
-* creación server-side;
-* status PENDING obligatorio;
-* mensajes de error;
-* mensaje de éxito.
-
-No implementar autenticación.
-
-No implementar dashboard.
-
-No implementar edición.
-
-No implementar administración.
-
----
-
-## FASE 4 — Visualizar y contactar
-
-Objetivo:
-
-Completar:
-
-CONTACTAR.
-
-Implementar:
-
-`/vivienda/[id]`
-
-Mostrar todos los datos públicos necesarios.
-
-Implementar galería.
-
-Implementar WhatsApp.
-
-Agregar aviso de seguridad:
-
-**Verifica personalmente la vivienda y la identidad del anunciante antes de realizar pagos o transferencias.**
-
-Agregar metadata básica para compartir enlaces.
-
-Implementar 404 para viviendas inexistentes o no publicadas.
-
-NO implementar chat.
-
----
-
-## FASE 5 — Auditoría y producción
-
-Objetivo:
-
-No agregar funcionalidades.
-
-Revisar exclusivamente:
-
-* seguridad;
-* validaciones;
-* consultas;
-* Storage;
-* imágenes;
-* responsive;
-* accesibilidad;
-* UX;
-* errores;
-* loading;
-* performance;
-* SEO básico;
-* metadata;
-* variables de entorno;
-* código muerto;
-* duplicación;
-* TypeScript;
-* lint;
-* build.
-
-Preparar deployment en Vercel.
-
-Actualizar README con:
-
-* instalación;
-* Supabase;
-* variables;
-* migrations;
-* desarrollo;
-* build;
-* deployment;
-* proceso manual para aprobar publicaciones PENDING.
-
-Realizar smoke testing final.
-
-NO agregar nuevas funcionalidades.
-
----
-
-# INSTRUCCIÓN IMPORTANTE
-
-Este documento proporciona el contexto completo del proyecto, pero NO debes ejecutar automáticamente todas las fases.
-
-Cuando recibas una instrucción como:
-
-`Ejecuta FASE 0`
-
-debes implementar exclusivamente esa fase.
-
-Cuando finalices, detenerte.
-
-No comenzar la fase siguiente hasta recibir una nueva instrucción explícita.
+- No avances a fases posteriores.
+- No agregues funcionalidades no solicitadas.
+- No cambies el stack.
+- No reemplaces configuración válida.
+- No instales dependencias sin necesidad.
+- No agregues paquetes solamente por comodidad.
+- No ignores el DESIGN.md.
+- No inventes estilos si DESIGN.md ya define el comportamiento.
+- No sacrifiques accesibilidad para copiar una captura.
+- No copies código Stitch defectuoso.
+- Replica visualmente los diseños mediante componentes Next.js correctos.
+
+Antes de finalizar:
+
+1. Revisa git diff.
+2. Ejecuta lint.
+3. Ejecuta TypeScript typecheck.
+4. Ejecuta tests existentes cuando aplique.
+5. Ejecuta production build.
+6. Corrige TODOS los errores.
+7. Revisa warnings relevantes.
+8. Elimina console.log innecesarios.
+9. Elimina imports sin usar.
+10. Elimina código muerto.
+11. Revisa que no hayas implementado funcionalidades fuera de scope.
+
+Al finalizar informa:
+
+- qué implementaste;
+- qué archivos modificaste;
+- decisiones relevantes;
+- comandos ejecutados;
+- resultado de lint;
+- resultado de typecheck;
+- resultado de build;
+- posibles bloqueos.
+
+======================================================================
+FASES
+======================================================================
+
+FASE 0
+Preparación del repositorio y sistema visual.
+
+FASE 1
+Supabase, modelo de datos, Storage y Colombia/DIVIPOLA.
+
+FASE 2
+ENCONTRAR vivienda.
+
+FASE 3
+PUBLICAR vivienda.
+
+FASE 4
+VER y CONTACTAR.
+
+FASE 5
+Auditoría, seguridad, UX y producción.
+
+IMPORTANTE:
+
+NO ejecutes automáticamente ninguna fase solamente por leer este documento.
+
+Espera una instrucción explícita:
+
+"Ejecuta FASE X"
+
+y realiza únicamente esa fase.
