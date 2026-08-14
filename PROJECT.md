@@ -59,8 +59,10 @@ funcional. La disponibilidad se modelará posteriormente como **Arriendo** o
 - Componentes compartidos pequeños en `src/components/` y rutas en `src/app/`.
 - Sin backend separado, microservicios, patrones de repositorio ni capas de
   servicios artificiales.
-- Supabase PostgreSQL, Supabase Storage, DIVIPOLA y Vercel se abordarán en sus
-  fases correspondientes, no durante la preparación visual.
+- La Fase 1 incorpora Supabase PostgreSQL y Storage mediante una migration
+  reproducible, clientes público/privilegiado separados y el dataset local
+  oficial DIVIPOLA. La configuración, aplicación y comprobación están descritas
+  en `docs/SUPABASE.md`.
 
 ## Dirección visual y accesibilidad
 
