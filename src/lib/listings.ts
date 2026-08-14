@@ -2,7 +2,6 @@ import "server-only";
 
 import { cache } from "react";
 import { createPrivilegedSupabaseClient } from "@/lib/supabase/server";
-import { createPublicSupabaseClient } from "@/lib/supabase/public";
 import type { Listing, ListingImage } from "@/types/data";
 
 export type ListingPreview = Pick<Listing, "id" | "property_type" | "availability_type" | "city_name" | "neighborhood" | "monthly_price" | "bedrooms" | "bathrooms"> & { imageUrl?: string };
@@ -34,7 +33,7 @@ const previewSelection = "id,property_type,availability_type,city_name,neighborh
 async function addPreviewImages(rows: ListingPreview[]): Promise<ListingPreview[]> {
   if (!rows.length) return rows;
 
-  const { data, error } = await createPublicSupabaseClient()
+  const { data, error } = await createPrivilegedSupabaseClient()
     .from("listing_images")
     .select("listing_id,storage_path,sort_order")
     .in("listing_id", rows.map(({ id }) => id))
@@ -59,7 +58,7 @@ async function addPreviewImages(rows: ListingPreview[]): Promise<ListingPreview[
 
 export async function getRecentListings(limit = 3): Promise<ListingPreview[]> {
   try {
-    const { data, error } = await createPublicSupabaseClient().from("listings").select(previewSelection).eq("status", "PUBLISHED").order("created_at", { ascending: false }).limit(limit);
+    const { data, error } = await createPrivilegedSupabaseClient().from("listings").select(previewSelection).eq("status", "PUBLISHED").order("created_at", { ascending: false }).limit(limit);
     if (error) throw error;
     return addPreviewImages((data ?? []) as ListingPreview[]);
   } catch { console.error("No fue posible consultar las viviendas recientes."); return []; }
@@ -67,7 +66,7 @@ export async function getRecentListings(limit = 3): Promise<ListingPreview[]> {
 
 export async function searchListings(filters: ListingFilters) {
   try {
-    let query = createPublicSupabaseClient().from("listings").select(previewSelection, { count: "exact" }).eq("status", "PUBLISHED");
+    let query = createPrivilegedSupabaseClient().from("listings").select(previewSelection, { count: "exact" }).eq("status", "PUBLISHED");
     if (filters.department) query = query.eq("department_code", filters.department);
     if (filters.city) query = query.eq("city_code", filters.city);
     if (filters.maxPrice !== undefined) query = query.lte("monthly_price", filters.maxPrice);
@@ -85,7 +84,7 @@ const detailSelection = "id,property_type,availability_type,department_name,city
 
 export const getPublishedListing = cache(async (id: string): Promise<ListingDetail | null> => {
   try {
-    const { data, error } = await createPublicSupabaseClient()
+    const { data, error } = await createPrivilegedSupabaseClient()
       .from("listings")
       .select(detailSelection)
       .eq("id", id)
