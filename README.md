@@ -76,6 +76,25 @@ No existe ni se requiere un panel administrativo.
 
 La publicación aparecerá entonces en búsqueda y su detalle será accesible. `PENDING` e `INACTIVE` se tratan públicamente como recursos inexistentes.
 
+### Una publicación no aparece en la búsqueda
+
+Crear el registro no basta para hacerlo público: `/buscar` exige explícitamente
+`status = 'PUBLISHED'`. Para diagnosticar un caso como departamento `76` y
+municipio `76001`, ejecuta en Supabase SQL Editor:
+
+```sql
+select id, department_code, city_code, status
+from public.listings
+where department_code = '76'
+  and city_code = '76001';
+```
+
+Si el registro está `PENDING`, completa la revisión manual anterior y cambia su
+estado a `PUBLISHED`. Si ya está `PUBLISHED`, confirma que Vercel apunta al mismo
+proyecto Supabase donde consultaste el registro y vuelve a desplegar después de
+corregir las variables. No cambies RLS ni la consulta para hacer públicos
+registros `PENDING` o `INACTIVE`.
+
 ## Deploy en Vercel
 
 No se necesita Docker ni servidor propio. Las páginas dinámicas y Route Handlers se ejecutan en el runtime serverless de Next.js.
