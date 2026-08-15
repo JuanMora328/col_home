@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/container";
 import { ListingGallery } from "@/components/listing-gallery";
 import { getPublishedListing } from "@/lib/listings";
+import { formatCOP } from "@/lib/currency";
 
 const propertyLabels = { APARTMENT: "Apartamento", HOUSE: "Casa", ROOM: "Habitación" } as const;
 const availabilityLabels = { RENT: "Arriendo", FREE_TEMPORARY: "Alojamiento temporal gratuito" } as const;
-const money = new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
 
 type PageProps = { params: Promise<{ id: string }>; searchParams: Promise<{ from?: string | string[] }> };
 
@@ -33,7 +33,7 @@ export default async function ListingPage({ params, searchParams }: PageProps) {
     <article className="mt-6">
       <header className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div><p className="mb-2 text-sm font-semibold uppercase tracking-wider text-secondary">{availabilityLabels[listing.availability_type]}</p><h1 className="font-heading text-3xl font-semibold sm:text-4xl">{propertyLabels[listing.property_type]} en {listing.neighborhood}</h1><p className="mt-2 text-lg text-ink-muted">{listing.neighborhood}, {listing.city_name}, {listing.department_name}</p></div>
-        <div className="shrink-0 md:text-right">{listing.monthly_price === 0 ? <><p className="text-sm font-bold text-secondary">ALOJAMIENTO GRATUITO</p><p className="font-heading text-3xl font-bold">$0</p></> : <p className="font-heading text-2xl font-bold text-primary sm:text-3xl">{money.format(listing.monthly_price)} <span className="text-base font-normal text-ink">/ mes</span></p>}</div>
+        <div className="shrink-0 md:text-right">{listing.monthly_price === 0 ? <><p className="text-sm font-bold text-secondary">ALOJAMIENTO GRATUITO</p><p className="font-heading text-3xl font-bold">$0</p></> : <p className="font-heading text-2xl font-bold text-primary sm:text-3xl">{formatCOP(listing.monthly_price)} <span className="text-base font-normal text-ink">/ mes</span></p>}</div>
       </header>
       <ListingGallery images={listing.images} alt={imageAlt} />
       <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(17rem,1fr)]">

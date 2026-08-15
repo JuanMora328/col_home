@@ -16,18 +16,18 @@ colors:
   outline: '#897269'
   outline-variant: '#dcc1b6'
   surface-tint: '#9d4315'
-  primary: '#9a4113'
+  primary: '#a83d32'
   on-primary: '#ffffff'
-  primary-container: '#ba582a'
+  primary-container: '#a83d32'
   on-primary-container: '#fffbff'
   inverse-primary: '#ffb597'
-  secondary: '#496800'
+  secondary: '#123c69'
   on-secondary: '#ffffff'
-  secondary-container: '#c8f17a'
+  secondary-container: '#dbe8f5'
   on-secondary-container: '#4e6e00'
-  tertiary: '#765700'
+  tertiary: '#d5a21b'
   on-tertiary: '#ffffff'
-  tertiary-container: '#956e00'
+  tertiary-container: '#fff0b8'
   on-tertiary-container: '#fffbff'
   error: '#ba1a1a'
   on-error: '#ffffff'
@@ -45,7 +45,7 @@ colors:
   tertiary-fixed-dim: '#f6be39'
   on-tertiary-fixed: '#261a00'
   on-tertiary-fixed-variant: '#5c4300'
-  background: '#fcf9f4'
+  background: '#fffaf0'
   on-background: '#1c1c19'
   surface-variant: '#e5e2dd'
   surface-parchment: '#fdfaf5'
@@ -129,10 +129,11 @@ The personality is modern yet grounded, evoking the feeling of a sun-baked court
 
 ## Colors
 
-The palette transition from commercial to community is achieved through thermal shift—replacing cold whites with warm parchment and high-saturation oranges with sun-baked terracotta.
+The palette transition from commercial to community is achieved through thermal shift—combining warm parchment with a restrained Colombian palette: deep blue, warm yellow and sun-baked terracotta.
 
-- **Primary (Terracotta):** A rich, clay-inspired hue (#c05d2e) representing the earth and the foundations of home. It is used for primary calls to action and key brand moments.
-- **Secondary (Moss/Sage):** A soft, natural green (#6b8e23) that symbolizes growth, peace, and environmental harmony within the community.
+- **Primary (Colombian Terracotta):** A restrained red-clay hue (#a83d32) represents warmth and home. It is used for primary calls to action.
+- **Secondary (Deep Blue):** A grounded blue (#123c69) communicates trust and gives labels, navigation and focus states structure.
+- **Accent (Warm Yellow):** A muted golden yellow (#d5a21b), inspired by Colombia, is reserved for highlights and focus support rather than large saturated surfaces.
 - **Surface (Parchment):** The foundation is a warm, breathable parchment (#fdfaf5). This reduces eye strain and provides a softer backdrop than pure white.
 - **Contrast (Charcoal):** To maintain legibility while avoiding the harshness of digital black, a deep charcoal (#2d2d2a) is used for all primary body text and headlines.
 

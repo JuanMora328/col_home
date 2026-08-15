@@ -1,0 +1,30 @@
+import Image from "next/image";
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { AdminAction } from "@/components/admin-action";
+import { Container } from "@/components/container";
+import { formatCOP } from "@/lib/currency";
+import { hasAdminSession } from "@/lib/admin-auth";
+import { getAdminListings, type AdminListing } from "@/lib/admin-listings";
+import { logout, moderateListing } from "./actions";
+import type { ListingStatus } from "@/types/data";
+
+export const metadata: Metadata = { title: "Moderación | Colombia Abriga", robots: { index: false, follow: false } };
+const statusLabels = { PENDING: "Pendiente", PUBLISHED: "Publicada", INACTIVE: "Inactiva" } as const;
+const propertyLabels = { APARTMENT: "Apartamento", HOUSE: "Casa", ROOM: "Habitación" } as const;
+const availabilityLabels = { RENT: "Arriendo", FREE_TEMPORARY: "Alojamiento temporal gratuito" } as const;
+
+export default async function AdminPage({ searchParams }: { searchParams: Promise<{ message?: string }> }) {
+  if (!await hasAdminSession()) redirect("/admin/login");
+  const listings = await getAdminListings();
+  const message = (await searchParams).message;
+  const feedback = message === "published" ? "La publicación quedó visible públicamente." : message === "inactive" ? "La publicación fue desactivada." : message ? "No fue posible completar esa acción." : "";
+  return <Container className="py-10 sm:py-14"><header className="flex flex-col gap-5 border-b border-outline-soft pb-7 sm:flex-row sm:items-end sm:justify-between"><div><p className="eyebrow">Entorno privado</p><h1 className="font-heading text-3xl font-bold text-blue sm:text-4xl">Moderación de viviendas</h1><p className="mt-2 text-ink-muted">Revisa la información y las fotos antes de publicar.</p></div><form action={logout}><button className="button-secondary" type="submit">Cerrar sesión</button></form></header>{feedback && <p className="mt-6 rounded-control bg-yellow-soft p-4 font-semibold text-blue" role="status">{feedback}</p>}{(["PENDING", "PUBLISHED", "INACTIVE"] as ListingStatus[]).map((status) => { const rows = listings.filter((listing) => listing.status === status); return <section className="mt-12" key={status} aria-labelledby={`heading-${status}`}><div className="flex items-baseline gap-3"><h2 className="font-heading text-2xl font-semibold" id={`heading-${status}`}>{statusLabels[status]}</h2><span className="chip-neutral">{rows.length}</span></div>{rows.length ? <div className="mt-6 space-y-7">{rows.map((listing) => <AdminCard listing={listing} key={listing.id} />)}</div> : <p className="mt-4 rounded-card bg-surface-low p-6 text-ink-muted">No hay publicaciones en este estado.</p>}</section>; })}</Container>;
+}
+
+function AdminCard({ listing }: { listing: AdminListing }) {
+  const primary = listing.images[0];
+  return <article className="overflow-hidden rounded-card border border-outline-soft bg-white shadow-soft"><div className="grid lg:grid-cols-[20rem_1fr]">{primary ? <div className="relative min-h-64 bg-surface-high"><Image src={primary.url} alt={`Foto principal de vivienda en ${listing.neighborhood}`} fill unoptimized className="object-cover" sizes="(min-width: 1024px) 320px, 100vw" /></div> : <div className="housing-placeholder min-h-56"><span aria-hidden="true">⌂</span><b>Vivienda sin foto disponible</b></div>}<div className="p-6 sm:p-8"><div className="flex flex-wrap items-center justify-between gap-3"><span className={`status status-${listing.status.toLowerCase()}`}>{statusLabels[listing.status]}</span><time className="text-sm text-ink-muted" dateTime={listing.created_at}>{new Intl.DateTimeFormat("es-CO", { dateStyle: "long", timeStyle: "short" }).format(new Date(listing.created_at))}</time></div><h3 className="mt-4 font-heading text-2xl font-semibold">{propertyLabels[listing.property_type]} en {listing.neighborhood}</h3><p className="text-ink-muted">{listing.city_name}, {listing.department_name}</p><dl className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-4"><Info label="Precio" value={formatCOP(listing.monthly_price)} /><Info label="Habitaciones" value={String(listing.bedrooms)} /><Info label="Baños" value={String(listing.bathrooms)} /><Info label="Disponibilidad" value={availabilityLabels[listing.availability_type]} /></dl><div className="mt-5"><h4 className="text-sm font-bold">Descripción</h4><p className="mt-1 whitespace-pre-wrap text-ink-muted">{listing.description}</p></div><p className="mt-5 border-t border-outline-soft pt-5"><strong>Contacto:</strong> {listing.contact_name} · {listing.contact_phone}</p>{listing.images.length > 1 && <div className="mt-5 flex flex-wrap gap-3" aria-label="Fotografías adicionales">{listing.images.slice(1).map((image, index) => <div className="relative h-20 w-28 overflow-hidden rounded-control" key={image.sortOrder}><Image src={image.url} alt={`Foto adicional ${index + 2}`} fill unoptimized className="object-cover" sizes="112px" /></div>)}</div>}<div className="mt-7 flex flex-wrap gap-3">{listing.status !== "PUBLISHED" && <Action id={listing.id} status="PUBLISHED" label={listing.status === "PENDING" ? "Aprobar y publicar" : "Volver a publicar"} primary />}{listing.status !== "INACTIVE" && <Action id={listing.id} status="INACTIVE" label={listing.status === "PENDING" ? "Rechazar" : "Desactivar"} />}</div></div></div></article>;
+}
+function Info({ label, value }: { label: string; value: string }) { return <div><dt className="text-xs font-bold uppercase tracking-wide text-ink-muted">{label}</dt><dd className="mt-1 font-semibold">{value}</dd></div>; }
+function Action({ id, status, label, primary = false }: { id: string; status: "PUBLISHED" | "INACTIVE"; label: string; primary?: boolean }) { return <form action={moderateListing}><input type="hidden" name="id" value={id} /><input type="hidden" name="status" value={status} /><AdminAction className={primary ? "button-primary" : "button-danger"} confirmMessage={`¿Confirmas que deseas ${label.toLowerCase()} esta publicación?`}>{label}</AdminAction></form>; }

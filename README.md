@@ -25,11 +25,13 @@ Abre `http://localhost:3000`. Configura estos valores en `.env.local` (nunca ver
 NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 SUPABASE_SECRET_KEY=your-secret-key
+ADMIN_PASSWORD=una-contraseña-larga-y-única
 ```
 
 - `NEXT_PUBLIC_SUPABASE_URL`: URL del proyecto Supabase.
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: clave pública; sus lecturas están limitadas por RLS.
 - `SUPABASE_SECRET_KEY`: clave privilegiada usada solo por módulos protegidos con `server-only`. No debe exponerse al navegador.
+- `ADMIN_PASSWORD`: contraseña única, larga y privada para la moderación. Se valida exclusivamente en el servidor y nunca debe usar el prefijo `NEXT_PUBLIC_`.
 
 ## Scripts
 
@@ -43,7 +45,7 @@ SUPABASE_SECRET_KEY=your-secret-key
 
 ## Supabase, migration y verificación
 
-1. Crea un proyecto Supabase y configura las tres variables anteriores.
+1. Crea un proyecto Supabase y configura las cuatro variables anteriores.
 2. Vincula Supabase CLI y ejecuta `supabase db push`, o ejecuta en SQL Editor `supabase/migrations/20260814000000_phase_1_data_infrastructure.sql`.
 3. Ejecuta `supabase/verify_phase_1.sql` en SQL Editor. Es una comprobación de solo lectura de tablas, constraints, RLS, policies, índices y Storage.
 
@@ -65,16 +67,19 @@ El bucket `listing-images` debe permanecer **privado**, admitir JPEG, PNG y WebP
 
 Si una pestaña se cierra después de preparar una publicación y antes de finalizarla o cancelarla, puede quedar un registro `PENDING` y, si ya hubo subidas, objetos huérfanos. El flujo limpia errores recuperables, pero cerrar el navegador no permite una limpieza garantizada. Para el MVP se debe revisar y eliminar periódicamente publicaciones `PENDING` antiguas y sus objetos; una tarea programada con umbral de antigüedad sería la evolución futura sencilla.
 
-## Moderación manual
+## Moderación privada mínima
 
-No existe ni se requiere un panel administrativo.
+El flujo habitual de moderación ya no requiere editar tablas directamente:
 
-1. Abre **Supabase → Table Editor → listings**.
-2. Localiza la publicación con estado `PENDING`.
-3. Revisa razonablemente descripción, fotografías, precio, contacto y ubicación declarada.
-4. Cambia `status` a `PUBLISHED` únicamente si la revisión es satisfactoria.
+1. Abre `/admin/login` e ingresa `ADMIN_PASSWORD`.
+2. En **Pendientes**, revisa fotos, descripción, precio, ubicación y contacto.
+3. **Aprobar y publicar** cambia `PENDING` a `PUBLISHED`; la vivienda pasa a ser visible en Home, búsqueda y detalle.
+4. **Rechazar** cambia una pendiente a `INACTIVE`. **Desactivar** hace lo mismo con una publicada. Una inactiva puede volver a publicarse.
+5. Usa **Cerrar sesión** en la cabecera del panel al terminar.
 
-La publicación aparecerá entonces en búsqueda y su detalle será accesible. `PENDING` e `INACTIVE` se tratan públicamente como recursos inexistentes.
+La sesión dura ocho horas y se guarda en una cookie firmada, `HttpOnly`, `SameSite=Lax` y `Secure` en producción. La contraseña no se guarda en la cookie ni se envía a componentes cliente. Cada acción vuelve a comprobar la sesión y aplica únicamente transiciones permitidas mediante el cliente privilegiado de Supabase.
+
+Solo los registros `PUBLISHED` se consultan desde Home, `/buscar` y `/vivienda/[id]`; `PENDING` e `INACTIVE` se comportan públicamente como inexistentes. Supabase Table Editor queda únicamente como fallback técnico para una intervención excepcional.
 
 ### Una publicación no aparece en la búsqueda
 
@@ -89,8 +94,7 @@ where department_code = '76'
   and city_code = '76001';
 ```
 
-Si el registro está `PENDING`, completa la revisión manual anterior y cambia su
-estado a `PUBLISHED`. Si ya está `PUBLISHED`, confirma que Vercel apunta al mismo
+Si el registro está `PENDING`, completa la revisión desde `/admin` y aprueba la publicación. Si ya está `PUBLISHED`, confirma que Vercel apunta al mismo
 proyecto Supabase donde consultaste el registro y vuelve a desplegar después de
 corregir las variables. No cambies RLS ni la consulta para hacer públicos
 registros `PENDING` o `INACTIVE`.
@@ -106,6 +110,7 @@ No se necesita Docker ni servidor propio. Las páginas dinámicas y Route Handle
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
    - `SUPABASE_SECRET_KEY`
+   - `ADMIN_PASSWORD`
 5. Confirma previamente que la migration y `supabase/verify_phase_1.sql` se ejecutaron en el proyecto Supabase de producción.
 6. Despliega y completa `docs/SMOKE_TEST.md` contra la URL resultante.
 
