@@ -2,21 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createAdminSession, deleteAdminSession, hasAdminSession, isAdminPassword } from "@/lib/admin-auth";
+import { hasAdminSession } from "@/lib/admin-auth";
 import { createPrivilegedSupabaseClient } from "@/lib/supabase/server";
 import type { ListingStatus } from "@/types/data";
-
-export async function login(formData: FormData) {
-  const candidate = formData.get("password");
-  if (typeof candidate !== "string" || !isAdminPassword(candidate)) redirect("/admin/login?error=1");
-  await createAdminSession();
-  redirect("/admin");
-}
-
-export async function logout() {
-  await deleteAdminSession();
-  redirect("/admin/login");
-}
 
 async function changeStatus(id: string, allowedCurrent: readonly ListingStatus[], next: ListingStatus) {
   if (!await hasAdminSession()) redirect("/admin/login");
