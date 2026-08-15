@@ -74,10 +74,12 @@ El flujo habitual de moderación ya no requiere editar tablas directamente:
 1. Abre `/admin/login` e ingresa `ADMIN_PASSWORD`.
 2. En **Pendientes**, revisa fotos, descripción, precio, ubicación y contacto.
 3. **Aprobar y publicar** cambia `PENDING` a `PUBLISHED`; la vivienda pasa a ser visible en Home, búsqueda y detalle.
-4. **Rechazar** cambia una pendiente a `INACTIVE`. **Desactivar** hace lo mismo con una publicada. Una inactiva puede volver a publicarse.
+4. **Rechazar** cambia una pendiente a `INACTIVE`. **Desactivar** hace lo mismo con una publicada.
 5. Usa **Cerrar sesión** en la cabecera del panel al terminar.
 
 La sesión dura ocho horas y se guarda en una cookie firmada, `HttpOnly`, `SameSite=Lax` y `Secure` en producción. La contraseña no se guarda en la cookie ni se envía a componentes cliente. Cada acción vuelve a comprobar la sesión y aplica únicamente transiciones permitidas mediante el cliente privilegiado de Supabase.
+
+La misma contraseña administrativa puede mantener varias sesiones simultáneas en navegadores o dispositivos diferentes. Cada inicio de sesión genera un token firmado independiente; cerrar sesión en un dispositivo solo elimina su propia cookie y no interrumpe las sesiones de los demás revisores. Cambiar `ADMIN_PASSWORD` invalida todas las sesiones existentes.
 
 Solo los registros `PUBLISHED` se consultan desde Home, `/buscar` y `/vivienda/[id]`; `PENDING` e `INACTIVE` se comportan públicamente como inexistentes. Supabase Table Editor queda únicamente como fallback técnico para una intervención excepcional.
 
