@@ -7,7 +7,7 @@ export function Header() {
       <Container className="flex min-h-24 flex-col justify-center gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
         <Link
           href="/"
-          className="font-heading text-2xl font-bold tracking-[0.02em] text-primary sm:text-3xl"
+          className="brand-mark font-heading text-2xl font-bold tracking-[0.02em] text-blue sm:text-3xl"
         >
           Colombia Abriga
         </Link>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es" className="h-full antialiased">
+    <html lang="es" className="h-full antialiased" data-scroll-behavior="smooth">
       <body className="flex min-h-full flex-col">
         <Header />
         <main className="flex-1">{children}</main>

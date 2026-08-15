@@ -4,8 +4,8 @@ import { cache } from "react";
 import { createPrivilegedSupabaseClient } from "@/lib/supabase/server";
 import type { Listing, ListingImage } from "@/types/data";
 
-export type ListingPreview = Pick<Listing, "id" | "property_type" | "availability_type" | "city_name" | "neighborhood" | "monthly_price" | "bedrooms" | "bathrooms"> & { imageUrl?: string };
-export type ListingDetail = Pick<Listing, "id" | "property_type" | "availability_type" | "department_name" | "city_name" | "neighborhood" | "monthly_price" | "bedrooms" | "bathrooms" | "description" | "contact_name" | "contact_phone"> & {
+export type ListingPreview = Pick<Listing, "id" | "property_type" | "availability_type" | "city_code" | "city_name" | "neighborhood" | "monthly_price" | "bedrooms" | "bathrooms"> & { imageUrl?: string };
+export type ListingDetail = Pick<Listing, "id" | "property_type" | "availability_type" | "department_name" | "city_code" | "city_name" | "neighborhood" | "monthly_price" | "bedrooms" | "bathrooms" | "description" | "contact_name" | "contact_phone"> & {
   images: { url: string; sortOrder: number }[];
 };
 
@@ -28,7 +28,7 @@ async function addSignedImages(rows: (ListingPreview & { listing_images?: Pick<L
   }));
 }
 
-const previewSelection = "id,property_type,availability_type,city_name,neighborhood,monthly_price,bedrooms,bathrooms";
+const previewSelection = "id,property_type,availability_type,city_code,city_name,neighborhood,monthly_price,bedrooms,bathrooms";
 
 async function addPreviewImages(rows: ListingPreview[]): Promise<ListingPreview[]> {
   if (!rows.length) return rows;
@@ -80,7 +80,7 @@ export async function searchListings(filters: ListingFilters) {
   } catch { console.error("No fue posible consultar las viviendas."); return { listings: [], count: 0, pageSize: PAGE_SIZE, error: true }; }
 }
 
-const detailSelection = "id,property_type,availability_type,department_name,city_name,neighborhood,monthly_price,bedrooms,bathrooms,description,contact_name,contact_phone,listing_images(storage_path,sort_order)";
+const detailSelection = "id,property_type,availability_type,department_name,city_code,city_name,neighborhood,monthly_price,bedrooms,bathrooms,description,contact_name,contact_phone,listing_images(storage_path,sort_order)";
 
 export const getPublishedListing = cache(async (id: string): Promise<ListingDetail | null> => {
   try {

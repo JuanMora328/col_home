@@ -32,7 +32,7 @@ Cada pantalla, dato y decisión técnica debe contribuir directamente a ese fluj
 - Ver los datos públicos de una vivienda, sin dirección exacta.
 - Contactar al anunciante mediante WhatsApp.
 - Operar únicamente con departamentos y municipios oficiales de Colombia.
-- Someter publicaciones nuevas a moderación manual antes de hacerlas públicas.
+- Someter publicaciones nuevas a moderación privada mínima antes de hacerlas públicas.
 
 Las integraciones de datos, publicación, búsqueda y contacto pertenecen a fases
 posteriores; la Fase 0 solo establece documentación, arquitectura y shell visual.
@@ -43,7 +43,8 @@ No se implementarán registro, inicio de sesión, cuentas, perfiles, panel de
 usuario, favoritos, chat, pagos, reservas, contratos, mapas, geolocalización,
 reseñas, comentarios, notificaciones, mensajería interna, recomendaciones,
 inteligencia artificial, herramientas para inmobiliarias, analytics avanzados,
-CMS, panel administrativo, aplicación móvil ni PWA.
+CMS, panel administrativo complejo, aplicación móvil ni PWA. La única excepción es
+el panel privado mínimo de moderación solicitado en la Fase 6.
 
 Tampoco forman parte del producto: **Guardar borrador**, una sección funcional
 de **Nuestra misión**, Wi-Fi, amoblado, servicios incluidos, parqueadero, baño
