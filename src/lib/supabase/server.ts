@@ -13,6 +13,10 @@ export function createPrivilegedSupabaseClient() {
   const secretKey = requireServerEnvironmentVariable("SUPABASE_SECRET_KEY");
 
   return createClient(url, secretKey, {
-    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
   });
 }

@@ -13,6 +13,7 @@ export function createListingImageStoragePath(
   listingId: string,
   mimeType: ListingImageMimeType,
 ): string {
-  if (!UUID_PATTERN.test(listingId)) throw new Error("listingId debe ser un UUID válido.");
+  if (!UUID_PATTERN.test(listingId))
+    throw new Error("listingId debe ser un UUID válido.");
   return `listings/${listingId}/${crypto.randomUUID()}.${EXTENSIONS_BY_MIME_TYPE[mimeType]}`;
 }

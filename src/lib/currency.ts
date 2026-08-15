@@ -1,4 +1,6 @@
-const colombianNumber = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+const colombianNumber = new Intl.NumberFormat("es-CO", {
+  maximumFractionDigits: 0,
+});
 
 export function formatCOP(value: number): string {
   return `$${colombianNumber.format(value)}`;

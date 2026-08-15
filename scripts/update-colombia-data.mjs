@@ -12,12 +12,16 @@ const OUTPUT_PATH = resolve(
 async function fetchResult(endpoint) {
   const response = await fetch(`${OFFICIAL_BASE_URL}/${endpoint}`);
   if (!response.ok) {
-    throw new Error(`DANE respondió ${response.status} al consultar ${endpoint}`);
+    throw new Error(
+      `DANE respondió ${response.status} al consultar ${endpoint}`,
+    );
   }
 
   const payload = await response.json();
   if (payload.estado !== true || !Array.isArray(payload.resultado)) {
-    throw new Error(`La respuesta oficial de ${endpoint} no tiene el formato esperado`);
+    throw new Error(
+      `La respuesta oficial de ${endpoint} no tiene el formato esperado`,
+    );
   }
 
   return payload.resultado;
@@ -50,14 +54,19 @@ const departments = departmentRows
   .map((row) => ({
     code: String(row.CODIGO_DEPARTAMENTO).padStart(2, "0"),
     name: officialName(row.NOMBRE_DEPARTAMENTO),
-    cities: [...(citiesByDepartment.get(row.CODIGO_DEPARTAMENTO)?.values() ?? [])].sort(
-      (left, right) => collator.compare(left.name, right.name),
-    ),
+    cities: [
+      ...(citiesByDepartment.get(row.CODIGO_DEPARTAMENTO)?.values() ?? []),
+    ].sort((left, right) => collator.compare(left.name, right.name)),
   }))
   .sort((left, right) => collator.compare(left.name, right.name));
 
-if (departments.length === 0 || departments.some(({ cities }) => cities.length === 0)) {
-  throw new Error("El dataset oficial resultó vacío o contiene departamentos sin municipios");
+if (
+  departments.length === 0 ||
+  departments.some(({ cities }) => cities.length === 0)
+) {
+  throw new Error(
+    "El dataset oficial resultó vacío o contiene departamentos sin municipios",
+  );
 }
 
 await mkdir(dirname(OUTPUT_PATH), { recursive: true });

@@ -10,12 +10,19 @@ export function getDepartments(): readonly ColombiaDepartment[] {
   return departments;
 }
 
-export function getCitiesByDepartment(departmentCode: string): readonly ColombiaCity[] {
+export function getCitiesByDepartment(
+  departmentCode: string,
+): readonly ColombiaCity[] {
   return departmentsByCode.get(departmentCode)?.cities ?? [];
 }
 
-export function isCityInDepartment(departmentCode: string, cityCode: string): boolean {
-  return getCitiesByDepartment(departmentCode).some((city) => city.code === cityCode);
+export function isCityInDepartment(
+  departmentCode: string,
+  cityCode: string,
+): boolean {
+  return getCitiesByDepartment(departmentCode).some(
+    (city) => city.code === cityCode,
+  );
 }
 
 export function getDepartmentName(departmentCode: string): string | undefined {
@@ -26,5 +33,7 @@ export function getCityName(
   departmentCode: string,
   cityCode: string,
 ): string | undefined {
-  return getCitiesByDepartment(departmentCode).find((city) => city.code === cityCode)?.name;
+  return getCitiesByDepartment(departmentCode).find(
+    (city) => city.code === cityCode,
+  )?.name;
 }

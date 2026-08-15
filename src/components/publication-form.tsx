@@ -7,28 +7,439 @@ import { PriceInput } from "@/components/price-input";
 import { createPublicSupabaseClient } from "@/lib/supabase/public";
 import type { ColombiaDepartment } from "@/types/data";
 
-type Prepared = { listingId: string; uploads: { path: string; token: string }[]; flowToken: string };
-const MAX = 6 * 1024 * 1024; const allowed = ["image/jpeg", "image/png", "image/webp"];
+type Prepared = {
+  listingId: string;
+  uploads: { path: string; token: string }[];
+  flowToken: string;
+};
+const MAX = 6 * 1024 * 1024;
+const allowed = ["image/jpeg", "image/png", "image/webp"];
 
-export function PublicationForm({ departments }: { departments: readonly ColombiaDepartment[] }) {
-  const startedAt = useRef(0); const zeroConfirmed = useRef(false); const dialog = useRef<HTMLDialogElement>(null); const [availability, setAvailability] = useState("RENT"); const [price, setPrice] = useState(""); const [files, setFiles] = useState<File[]>([]); const [error, setError] = useState(""); const [busy, setBusy] = useState(false); const [success, setSuccess] = useState(false);
-  useEffect(() => { startedAt.current = Date.now(); }, []);
-  useEffect(() => () => files.forEach((file) => URL.revokeObjectURL((file as File & { preview?: string }).preview ?? "")), [files]);
-  function choose(list: FileList | null) { const next = Array.from(list ?? []); if (next.length + files.length > 5 || next.some((file) => !allowed.includes(file.type) || file.size > MAX || file.size < 1)) { setError("Selecciona máximo 5 fotos JPG, PNG o WebP de hasta 6 MiB cada una."); return; } setError(""); setFiles((current) => [...current, ...next.map((file) => Object.assign(file, { preview: URL.createObjectURL(file) }))]); }
-  async function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); if (availability === "RENT" && Number(price || 0) === 0 && !zeroConfirmed.current) { dialog.current?.showModal(); return; } if (!files.length) { setError("Selecciona al menos una fotografía."); return; } setBusy(true); setError(""); const form = new FormData(event.currentTarget); const payload = { propertyType: form.get("propertyType"), availabilityType: availability, monthlyPrice: availability === "FREE_TEMPORARY" ? 0 : Number(price || 0), department: form.get("department"), city: form.get("city"), neighborhood: form.get("neighborhood"), bedrooms: Number(form.get("bedrooms")), bathrooms: Number(form.get("bathrooms")), description: form.get("description"), contactName: form.get("contactName"), contactPhone: form.get("contactPhone"), honeypot: form.get("website"), startedAt: startedAt.current, images: files.map(({ type, size }) => ({ type, size })) };
-    let prepared: (Prepared & { error?: string }) | undefined;
-    try { const response = await fetch("/api/publicaciones/preparar", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) }); prepared = await response.json() as Prepared & { error?: string }; if (!response.ok) throw new Error(prepared.error ?? "No pudimos preparar la publicación."); const supabase = createPublicSupabaseClient(); for (let index = 0; index < files.length; index++) { const upload = await supabase.storage.from("listing-images").uploadToSignedUrl(prepared.uploads[index].path, prepared.uploads[index].token, files[index], { contentType: files[index].type }); if (upload.error) throw new Error("No pudimos subir todas las fotografías."); } const final = await fetch("/api/publicaciones/finalizar", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ listingId: prepared.listingId, flowToken: prepared.flowToken, paths: prepared.uploads.map((item) => item.path) }) }); const result = await final.json() as { error?: string }; if (!final.ok) throw new Error(result.error ?? "No pudimos completar la publicación."); setSuccess(true); window.scrollTo({ top: 0, behavior: "smooth" }); } catch (reason) { if (prepared?.listingId) { await fetch("/api/publicaciones/cancelar", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ listingId: prepared.listingId, flowToken: prepared.flowToken }) }).catch(() => undefined); } setError(reason instanceof Error ? reason.message : "No pudimos enviar la publicación."); } finally { setBusy(false); }
+export function PublicationForm({
+  departments,
+}: {
+  departments: readonly ColombiaDepartment[];
+}) {
+  const startedAt = useRef(0);
+  const zeroConfirmed = useRef(false);
+  const dialog = useRef<HTMLDialogElement>(null);
+  const [availability, setAvailability] = useState("RENT");
+  const [price, setPrice] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [success, setSuccess] = useState(false);
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
+  useEffect(
+    () => () =>
+      files.forEach((file) =>
+        URL.revokeObjectURL(
+          (file as File & { preview?: string }).preview ?? "",
+        ),
+      ),
+    [files],
+  );
+  function choose(list: FileList | null) {
+    const next = Array.from(list ?? []);
+    if (
+      next.length + files.length > 5 ||
+      next.some(
+        (file) =>
+          !allowed.includes(file.type) || file.size > MAX || file.size < 1,
+      )
+    ) {
+      setError(
+        "Selecciona máximo 5 fotos JPG, PNG o WebP de hasta 6 MiB cada una.",
+      );
+      return;
+    }
+    setError("");
+    setFiles((current) => [
+      ...current,
+      ...next.map((file) =>
+        Object.assign(file, { preview: URL.createObjectURL(file) }),
+      ),
+    ]);
   }
-  async function confirmZero() { const response = await fetch("/api/publicaciones/confirmar-cero", { method: "POST" }); if (!response.ok) { setError("No pudimos registrar la confirmación."); return; } zeroConfirmed.current = true; dialog.current?.close(); document.querySelector<HTMLFormElement>("#publication-form")?.requestSubmit(); }
-  if (success) return <section className="mx-auto max-w-2xl rounded-card bg-white p-8 text-center shadow-soft sm:p-14"><div className="text-5xl" aria-hidden="true">❤️</div><h1 className="mt-5 font-heading text-3xl font-bold">Gracias por ayudar ❤️</h1><p className="mt-5 text-lg text-ink-muted">Recibimos la información de tu vivienda. La publicación será revisada antes de aparecer disponible en la plataforma.</p><div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><Link className="button-secondary" href="/">Volver al inicio</Link><Link className="button-primary" href="/buscar">Ver viviendas disponibles</Link></div></section>;
-  return <form id="publication-form" onSubmit={submit} className="publication-form grid gap-5 sm:gap-6 lg:grid-cols-2"><Section title="Información básica" className="lg:col-span-2" gridClassName="md:grid-cols-[1fr_1.25fr_1fr]"><label className="field"><span>Tipo de inmueble</span><select className="control" name="propertyType" required><option value="">Selecciona una opción</option><option value="APARTMENT">Apartamento</option><option value="HOUSE">Casa</option><option value="ROOM">Habitación</option></select></label><label className="field"><span>Tipo de disponibilidad</span><select className="control" value={availability} onChange={(e) => setAvailability(e.target.value)} required><option value="RENT">Arriendo</option><option value="FREE_TEMPORARY">Alojamiento temporal gratuito</option></select></label><label className="field"><span>Precio mensual (COP)</span><PriceInput value={availability === "FREE_TEMPORARY" ? "0" : price} onChange={setPrice} disabled={availability === "FREE_TEMPORARY"} />{availability === "FREE_TEMPORARY" && <small>Este alojamiento será publicado como gratuito.</small>}</label></Section>
-    <Section title="Ubicación" className="lg:col-span-2" gridClassName="sm:grid-cols-2"><LocationFields departments={departments} /><label className="field sm:col-span-2"><span>Barrio / Vereda</span><input className="control" name="neighborhood" required maxLength={80} /></label></Section>
-    <Section title="Características" gridClassName="sm:grid-cols-2"><label className="field"><span>Habitaciones</span><input className="control" name="bedrooms" type="number" min="0" max="100" required /></label><label className="field"><span>Baños</span><input className="control" name="bathrooms" type="number" min="1" max="100" required /></label></Section>
-    <Section title="Contacto" gridClassName="sm:grid-cols-2"><label className="field"><span>Nombre</span><input className="control" name="contactName" required maxLength={80} autoComplete="name" /></label><label className="field"><span>WhatsApp</span><input className="control" name="contactPhone" required maxLength={40} inputMode="tel" autoComplete="tel" placeholder="300 123 4567" /></label></Section>
-    <Section title="Descripción" className="lg:col-span-2"><label className="field"><span>Descripción</span><textarea className="control min-h-28 resize-y py-3" name="description" required maxLength={1500} /></label></Section>
-    <Section title="Fotos del inmueble" className="lg:col-span-2"><div><label className="upload"><span className="text-3xl" aria-hidden="true">▣</span><span><b className="block">Selecciona las fotos del inmueble</b><span className="mt-1 block text-sm font-normal text-ink-muted">Entre 1 y 5 fotos JPG, PNG o WebP. Máximo 6 MiB cada una.</span></span><span className="button-secondary mt-2 md:mt-0">Elegir fotos</span><input className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={(e) => { choose(e.target.files); e.target.value = ""; }} /></label>{files.length > 0 && <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">{files.map((file, index) => <li className="rounded-control bg-white p-2" key={`${file.name}-${index}`}><Image className="aspect-[4/3] w-full rounded-lg object-cover" src={(file as File & { preview: string }).preview} alt={`Vista previa ${index + 1}`} width={180} height={135} unoptimized /><button type="button" className="mt-2 min-h-9 w-full rounded-lg text-sm font-semibold text-primary hover:bg-primary-soft" onClick={() => setFiles((current) => current.filter((_, i) => i !== index))}>Quitar foto</button></li>)}</ul>}</div></Section>
-    <div className="sr-only" aria-hidden="true"><label>No completar este campo<input name="website" tabIndex={-1} autoComplete="off" /></label></div>{error && <p className="rounded-control bg-[#ffdad6] p-4 font-semibold text-[#93000a] lg:col-span-2" role="alert">{error}</p>}<div className="flex border-t border-outline-soft pt-5 sm:justify-end lg:col-span-2"><button className="button-primary w-full sm:w-auto sm:min-w-52" disabled={busy}>{busy ? "Publicando…" : "Publicar vivienda"}</button></div>
-    <dialog ref={dialog} className="modal" onCancel={() => dialog.current?.close()}><h2 className="font-heading text-2xl font-semibold">¿Confirmas que el valor del arriendo es $0?</h2><p className="mt-4 text-ink-muted">Recuerda que al indicar un valor de $0 estás informando que no cobrarás por esta vivienda. Es importante ingresar el valor real para evitar reprocesos y permitir que las personas encuentren rápidamente una vivienda que se ajuste a sus necesidades y posibilidades actuales.</p><div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-end"><button type="button" className="button-secondary" onClick={() => dialog.current?.close()}>Volver y corregir</button><button type="button" className="button-primary" onClick={confirmZero}>Sí, confirmo que el valor es $0</button></div></dialog>
-  </form>;
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (
+      availability === "RENT" &&
+      Number(price || 0) === 0 &&
+      !zeroConfirmed.current
+    ) {
+      dialog.current?.showModal();
+      return;
+    }
+    if (!files.length) {
+      setError("Selecciona al menos una fotografía.");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    const form = new FormData(event.currentTarget);
+    const payload = {
+      propertyType: form.get("propertyType"),
+      availabilityType: availability,
+      monthlyPrice: availability === "FREE_TEMPORARY" ? 0 : Number(price || 0),
+      department: form.get("department"),
+      city: form.get("city"),
+      neighborhood: form.get("neighborhood"),
+      bedrooms: Number(form.get("bedrooms")),
+      bathrooms: Number(form.get("bathrooms")),
+      description: form.get("description"),
+      contactName: form.get("contactName"),
+      contactPhone: form.get("contactPhone"),
+      honeypot: form.get("website"),
+      startedAt: startedAt.current,
+      images: files.map(({ type, size }) => ({ type, size })),
+    };
+    let prepared: (Prepared & { error?: string }) | undefined;
+    try {
+      const response = await fetch("/api/publicaciones/preparar", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      prepared = (await response.json()) as Prepared & { error?: string };
+      if (!response.ok)
+        throw new Error(
+          prepared.error ?? "No pudimos preparar la publicación.",
+        );
+      const supabase = createPublicSupabaseClient();
+      for (let index = 0; index < files.length; index++) {
+        const upload = await supabase.storage
+          .from("listing-images")
+          .uploadToSignedUrl(
+            prepared.uploads[index].path,
+            prepared.uploads[index].token,
+            files[index],
+            { contentType: files[index].type },
+          );
+        if (upload.error)
+          throw new Error("No pudimos subir todas las fotografías.");
+      }
+      const final = await fetch("/api/publicaciones/finalizar", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          listingId: prepared.listingId,
+          flowToken: prepared.flowToken,
+          paths: prepared.uploads.map((item) => item.path),
+        }),
+      });
+      const result = (await final.json()) as { error?: string };
+      if (!final.ok)
+        throw new Error(result.error ?? "No pudimos completar la publicación.");
+      setSuccess(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (reason) {
+      if (prepared?.listingId) {
+        await fetch("/api/publicaciones/cancelar", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            listingId: prepared.listingId,
+            flowToken: prepared.flowToken,
+          }),
+        }).catch(() => undefined);
+      }
+      setError(
+        reason instanceof Error
+          ? reason.message
+          : "No pudimos enviar la publicación.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function confirmZero() {
+    const response = await fetch("/api/publicaciones/confirmar-cero", {
+      method: "POST",
+    });
+    if (!response.ok) {
+      setError("No pudimos registrar la confirmación.");
+      return;
+    }
+    zeroConfirmed.current = true;
+    dialog.current?.close();
+    document
+      .querySelector<HTMLFormElement>("#publication-form")
+      ?.requestSubmit();
+  }
+  if (success)
+    return (
+      <section className="mx-auto max-w-2xl rounded-card bg-white p-8 text-center shadow-soft sm:p-14">
+        <div className="text-5xl" aria-hidden="true">
+          ❤️
+        </div>
+        <h1 className="mt-5 font-heading text-3xl font-bold">
+          Gracias por ayudar ❤️
+        </h1>
+        <p className="mt-5 text-lg text-ink-muted">
+          Recibimos la información de tu vivienda. La publicación será revisada
+          antes de aparecer disponible en la plataforma.
+        </p>
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link className="button-secondary" href="/">
+            Volver al inicio
+          </Link>
+          <Link className="button-primary" href="/buscar">
+            Ver viviendas disponibles
+          </Link>
+        </div>
+      </section>
+    );
+  return (
+    <form
+      id="publication-form"
+      onSubmit={submit}
+      className="publication-form grid gap-5 sm:gap-6 lg:grid-cols-2"
+    >
+      <Section
+        title="Información básica"
+        className="lg:col-span-2"
+        gridClassName="md:grid-cols-[1fr_1.25fr_1fr]"
+      >
+        <label className="field">
+          <span>Tipo de inmueble</span>
+          <select className="control" name="propertyType" required>
+            <option value="">Selecciona una opción</option>
+            <option value="APARTMENT">Apartamento</option>
+            <option value="HOUSE">Casa</option>
+            <option value="ROOM">Habitación</option>
+          </select>
+        </label>
+        <label className="field">
+          <span>Tipo de disponibilidad</span>
+          <select
+            className="control"
+            value={availability}
+            onChange={(e) => setAvailability(e.target.value)}
+            required
+          >
+            <option value="RENT">Arriendo</option>
+            <option value="FREE_TEMPORARY">
+              Alojamiento temporal gratuito
+            </option>
+          </select>
+        </label>
+        <label className="field">
+          <span>Precio mensual (COP)</span>
+          <PriceInput
+            value={availability === "FREE_TEMPORARY" ? "0" : price}
+            onChange={setPrice}
+            disabled={availability === "FREE_TEMPORARY"}
+          />
+          {availability === "FREE_TEMPORARY" && (
+            <small>Este alojamiento será publicado como gratuito.</small>
+          )}
+        </label>
+      </Section>
+      <Section
+        title="Ubicación"
+        className="lg:col-span-2"
+        gridClassName="sm:grid-cols-2"
+      >
+        <LocationFields departments={departments} />
+        <label className="field sm:col-span-2">
+          <span>Barrio / Vereda</span>
+          <input
+            className="control"
+            name="neighborhood"
+            required
+            maxLength={80}
+          />
+        </label>
+      </Section>
+      <Section title="Características" gridClassName="sm:grid-cols-2">
+        <label className="field">
+          <span>Habitaciones</span>
+          <input
+            className="control"
+            name="bedrooms"
+            type="number"
+            min="0"
+            max="100"
+            required
+          />
+        </label>
+        <label className="field">
+          <span>Baños</span>
+          <input
+            className="control"
+            name="bathrooms"
+            type="number"
+            min="1"
+            max="100"
+            required
+          />
+        </label>
+      </Section>
+      <Section title="Contacto" gridClassName="sm:grid-cols-2">
+        <label className="field">
+          <span>Nombre</span>
+          <input
+            className="control"
+            name="contactName"
+            required
+            maxLength={80}
+            autoComplete="name"
+          />
+        </label>
+        <label className="field">
+          <span>WhatsApp</span>
+          <input
+            className="control"
+            name="contactPhone"
+            required
+            maxLength={40}
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder="300 123 4567"
+          />
+        </label>
+      </Section>
+      <Section title="Descripción" className="lg:col-span-2">
+        <label className="field">
+          <span>Descripción</span>
+          <textarea
+            className="control min-h-28 resize-y py-3"
+            name="description"
+            required
+            maxLength={1500}
+          />
+        </label>
+      </Section>
+      <Section title="Fotos del inmueble" className="lg:col-span-2">
+        <div>
+          <label className="upload">
+            <span className="text-3xl" aria-hidden="true">
+              ▣
+            </span>
+            <span>
+              <b className="block">Selecciona las fotos del inmueble</b>
+              <span className="mt-1 block text-sm font-normal text-ink-muted">
+                Entre 1 y 5 fotos JPG, PNG o WebP. Máximo 6 MiB cada una.
+              </span>
+            </span>
+            <span className="button-secondary mt-2 md:mt-0">Elegir fotos</span>
+            <input
+              className="sr-only"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              onChange={(e) => {
+                choose(e.target.files);
+                e.target.value = "";
+              }}
+            />
+          </label>
+          {files.length > 0 && (
+            <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+              {files.map((file, index) => (
+                <li
+                  className="rounded-control bg-white p-2"
+                  key={`${file.name}-${index}`}
+                >
+                  <Image
+                    className="aspect-[4/3] w-full rounded-lg object-cover"
+                    src={(file as File & { preview: string }).preview}
+                    alt={`Vista previa ${index + 1}`}
+                    width={180}
+                    height={135}
+                    unoptimized
+                  />
+                  <button
+                    type="button"
+                    className="mt-2 min-h-9 w-full rounded-lg text-sm font-semibold text-primary hover:bg-primary-soft"
+                    onClick={() =>
+                      setFiles((current) =>
+                        current.filter((_, i) => i !== index),
+                      )
+                    }
+                  >
+                    Quitar foto
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </Section>
+      <div className="sr-only" aria-hidden="true">
+        <label>
+          No completar este campo
+          <input name="website" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
+      {error && (
+        <p
+          className="rounded-control bg-[#ffdad6] p-4 font-semibold text-[#93000a] lg:col-span-2"
+          role="alert"
+        >
+          {error}
+        </p>
+      )}
+      <div className="flex border-t border-outline-soft pt-5 sm:justify-end lg:col-span-2">
+        <button
+          className="button-primary w-full sm:w-auto sm:min-w-52"
+          disabled={busy}
+        >
+          {busy ? "Publicando…" : "Publicar vivienda"}
+        </button>
+      </div>
+      <dialog
+        ref={dialog}
+        className="modal"
+        onCancel={() => dialog.current?.close()}
+      >
+        <h2 className="font-heading text-2xl font-semibold">
+          ¿Confirmas que el valor del arriendo es $0?
+        </h2>
+        <p className="mt-4 text-ink-muted">
+          Recuerda que al indicar un valor de $0 estás informando que no
+          cobrarás por esta vivienda. Es importante ingresar el valor real para
+          evitar reprocesos y permitir que las personas encuentren rápidamente
+          una vivienda que se ajuste a sus necesidades y posibilidades actuales.
+        </p>
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-end">
+          <button
+            type="button"
+            className="button-secondary"
+            onClick={() => dialog.current?.close()}
+          >
+            Volver y corregir
+          </button>
+          <button
+            type="button"
+            className="button-primary"
+            onClick={confirmZero}
+          >
+            Sí, confirmo que el valor es $0
+          </button>
+        </div>
+      </dialog>
+    </form>
+  );
 }
-function Section({ title, children, className = "", gridClassName = "" }: { title: string; children: React.ReactNode; className?: string; gridClassName?: string }) { return <fieldset className={`form-section ${className}`}><legend>{title}</legend><div className={`grid gap-4 sm:gap-5 ${gridClassName}`}>{children}</div></fieldset>; }
+function Section({
+  title,
+  children,
+  className = "",
+  gridClassName = "",
+}: {
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+  gridClassName?: string;
+}) {
+  return (
+    <fieldset className={`form-section ${className}`}>
+      <legend>{title}</legend>
+      <div className={`grid gap-4 sm:gap-5 ${gridClassName}`}>{children}</div>
+    </fieldset>
+  );
+}

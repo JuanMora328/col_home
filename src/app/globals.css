@@ -68,60 +68,322 @@ a {
 }
 
 @layer components {
-  .field { display: flex; flex-direction: column; gap: .55rem; min-width: 0; font-size: .875rem; font-weight: 700; color: var(--color-blue); }
-  .field small { color: var(--color-ink-muted); font-weight: 400; }
-  .control { min-height: 3.5rem; width: 100%; border: 1.5px solid var(--color-outline); border-radius: var(--radius-control); background: white; padding: .75rem 1rem; color: var(--color-ink); font-weight: 400; transition: border-color .15s, box-shadow .15s, background-color .15s; }
-  .control:hover:not(:disabled), .price-wrap:hover { border-color: var(--color-blue); }
-  .control:focus, .price-wrap:focus-within { border-color: var(--color-blue); box-shadow: 0 0 0 3px rgb(213 162 27 / 28%); outline: none; }
-  .control:disabled, .price-wrap:has(input:disabled) { cursor: not-allowed; background: var(--color-surface-high); color: var(--color-ink-muted); }
-  .control::placeholder, .price-wrap input::placeholder { color: #776d65; opacity: 1; }
-  .price-wrap { display: flex; min-height: 3.5rem; align-items: center; gap: .5rem; border: 1.5px solid var(--color-outline); border-radius: var(--radius-control); background: white; padding: 0 1rem; color: var(--color-blue); transition: border-color .15s, box-shadow .15s; }
-  .price-wrap input { min-width: 0; flex: 1; outline: none; }
-  .button-primary, .button-secondary { display: inline-flex; min-height: 3rem; align-items: center; justify-content: center; border-radius: var(--radius-control); padding: .7rem 1.5rem; font-size: .875rem; font-weight: 700; transition: background-color .15s; }
-  .button-primary { background: var(--color-primary); color: white; }
-  .button-primary:hover { background: var(--color-primary-hover); }
-  .button-primary:disabled { cursor: wait; opacity: .65; }
-  .button-secondary { border: 2px solid var(--color-blue); color: var(--color-blue); }
-  .button-secondary:hover { background: var(--color-secondary-soft); }
-  .button-danger { display: inline-flex; min-height: 3rem; align-items: center; justify-content: center; border: 2px solid var(--color-primary); border-radius: var(--radius-control); padding: .7rem 1.5rem; color: var(--color-primary-hover); font-size: .875rem; font-weight: 700; }
-  .button-danger:hover { background: var(--color-primary-soft); }
-  .chip, .chip-neutral { display: inline-flex; border-radius: 999px; padding: .25rem .75rem; font-size: .75rem; }
-  .chip { background: var(--color-yellow-soft); color: #513b00; }
-  .chip-neutral { background: var(--color-surface-container); }
-  .empty-state { border-radius: var(--radius-card); background: var(--color-surface-container); padding: 2.5rem; text-align: center; color: var(--color-ink-muted); }
-  .form-section { border-radius: var(--radius-card); background: var(--color-surface-low); padding: 1.5rem; }
-  .form-section legend { width: 100%; padding: 0 0 .75rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; }
-  .publication-form .form-section { min-width: 0; padding: 1.25rem; }
-  .publication-form .form-section legend { padding-bottom: .6rem; color: var(--color-blue); }
-  .publication-form .control, .publication-form .price-wrap { min-height: 3rem; }
-  .publication-form .control { padding-block: .55rem; }
-  .publication-form .upload { min-height: 8.5rem; padding: 1.25rem; }
-  .upload { display: flex; min-height: 12rem; cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; border: 2px dashed var(--color-blue); border-radius: var(--radius-control); background: white; padding: 1.5rem; text-align: center; color: var(--color-blue); transition: background-color .15s; }
-  .upload:hover { background: var(--color-secondary-soft); }
-  .eyebrow { color: var(--color-primary); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-  .error-message { border-radius: var(--radius-control); background: #ffdad6; padding: 1rem; color: #7d0008; font-weight: 700; }
-  .status { display: inline-flex; border-radius: 999px; padding: .3rem .8rem; font-size: .75rem; font-weight: 800; }
-  .status-pending { background: var(--color-yellow-soft); color: #513b00; }
-  .status-published { background: var(--color-secondary-soft); color: var(--color-blue); }
-  .status-inactive { background: var(--color-surface-high); color: var(--color-ink-muted); }
-  .housing-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; background: var(--color-surface-high); color: var(--color-ink-muted); text-align: center; }
-  .housing-placeholder span { color: var(--color-blue); font-size: 3rem; }
-  .brand-mark { position: relative; padding-bottom: .4rem; }
-  .brand-mark::after { position: absolute; right: 0; bottom: 0; left: 0; height: 3px; border-radius: 999px; background: linear-gradient(90deg, var(--color-yellow) 0 50%, var(--color-blue) 50% 75%, var(--color-primary) 75%); content: ""; }
-  .modal { position: fixed; inset: 0; width: min(calc(100% - 2rem), 42rem); max-height: calc(100dvh - 2rem); margin: auto; overflow: auto; border: 0; border-radius: var(--radius-card); background: white; padding: 1.5rem; color: var(--color-ink); box-shadow: var(--shadow-soft); }
-  .modal::backdrop { background: rgb(28 28 25 / 55%); }
-  .lightbox { max-height: 100dvh; max-width: 100vw; overflow: hidden; border: 0; background: transparent; padding: 0; color: white; }
-  .lightbox::backdrop { background: rgb(10 15 22 / 92%); }
-  .lightbox-control { position: fixed; z-index: 1; display: inline-flex; min-height: 2.75rem; min-width: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; background: rgb(0 0 0 / 72%); padding: .5rem; color: white; font-size: 1.5rem; font-weight: 700; }
-  .lightbox-control:hover { background: var(--color-primary); }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    min-width: 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-blue);
+  }
+  .field small {
+    color: var(--color-ink-muted);
+    font-weight: 400;
+  }
+  .control {
+    min-height: 3.5rem;
+    width: 100%;
+    border: 1.5px solid var(--color-outline);
+    border-radius: var(--radius-control);
+    background: white;
+    padding: 0.75rem 1rem;
+    color: var(--color-ink);
+    font-weight: 400;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s,
+      background-color 0.15s;
+  }
+  .control:hover:not(:disabled),
+  .price-wrap:hover {
+    border-color: var(--color-blue);
+  }
+  .control:focus,
+  .price-wrap:focus-within {
+    border-color: var(--color-blue);
+    box-shadow: 0 0 0 3px rgb(213 162 27 / 28%);
+    outline: none;
+  }
+  .control:disabled,
+  .price-wrap:has(input:disabled) {
+    cursor: not-allowed;
+    background: var(--color-surface-high);
+    color: var(--color-ink-muted);
+  }
+  .control::placeholder,
+  .price-wrap input::placeholder {
+    color: #776d65;
+    opacity: 1;
+  }
+  .price-wrap {
+    display: flex;
+    min-height: 3.5rem;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1.5px solid var(--color-outline);
+    border-radius: var(--radius-control);
+    background: white;
+    padding: 0 1rem;
+    color: var(--color-blue);
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+  }
+  .price-wrap input {
+    min-width: 0;
+    flex: 1;
+    outline: none;
+  }
+  .button-primary,
+  .button-secondary {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-control);
+    padding: 0.7rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    transition: background-color 0.15s;
+  }
+  .button-primary {
+    background: var(--color-primary);
+    color: white;
+  }
+  .button-primary:hover {
+    background: var(--color-primary-hover);
+  }
+  .button-primary:disabled {
+    cursor: wait;
+    opacity: 0.65;
+  }
+  .button-secondary {
+    border: 2px solid var(--color-blue);
+    color: var(--color-blue);
+  }
+  .button-secondary:hover {
+    background: var(--color-secondary-soft);
+  }
+  .button-danger {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-control);
+    padding: 0.7rem 1.5rem;
+    color: var(--color-primary-hover);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .button-danger:hover {
+    background: var(--color-primary-soft);
+  }
+  .chip,
+  .chip-neutral {
+    display: inline-flex;
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  .chip {
+    background: var(--color-yellow-soft);
+    color: #513b00;
+  }
+  .chip-neutral {
+    background: var(--color-surface-container);
+  }
+  .empty-state {
+    border-radius: var(--radius-card);
+    background: var(--color-surface-container);
+    padding: 2.5rem;
+    text-align: center;
+    color: var(--color-ink-muted);
+  }
+  .form-section {
+    border-radius: var(--radius-card);
+    background: var(--color-surface-low);
+    padding: 1.5rem;
+  }
+  .form-section legend {
+    width: 100%;
+    padding: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  .publication-form .form-section {
+    min-width: 0;
+    padding: 1.25rem;
+  }
+  .publication-form .form-section legend {
+    padding-bottom: 0.6rem;
+    color: var(--color-blue);
+  }
+  .publication-form .control,
+  .publication-form .price-wrap {
+    min-height: 3rem;
+  }
+  .publication-form .control {
+    padding-block: 0.55rem;
+  }
+  .publication-form .upload {
+    min-height: 8.5rem;
+    padding: 1.25rem;
+  }
+  .upload {
+    display: flex;
+    min-height: 12rem;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 2px dashed var(--color-blue);
+    border-radius: var(--radius-control);
+    background: white;
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--color-blue);
+    transition: background-color 0.15s;
+  }
+  .upload:hover {
+    background: var(--color-secondary-soft);
+  }
+  .eyebrow {
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .error-message {
+    border-radius: var(--radius-control);
+    background: #ffdad6;
+    padding: 1rem;
+    color: #7d0008;
+    font-weight: 700;
+  }
+  .status {
+    display: inline-flex;
+    border-radius: 999px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+  .status-pending {
+    background: var(--color-yellow-soft);
+    color: #513b00;
+  }
+  .status-published {
+    background: var(--color-secondary-soft);
+    color: var(--color-blue);
+  }
+  .status-inactive {
+    background: var(--color-surface-high);
+    color: var(--color-ink-muted);
+  }
+  .housing-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--color-surface-high);
+    color: var(--color-ink-muted);
+    text-align: center;
+  }
+  .housing-placeholder span {
+    color: var(--color-blue);
+    font-size: 3rem;
+  }
+  .brand-mark {
+    position: relative;
+    padding-bottom: 0.4rem;
+  }
+  .brand-mark::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      var(--color-yellow) 0 50%,
+      var(--color-blue) 50% 75%,
+      var(--color-primary) 75%
+    );
+    content: "";
+  }
+  .modal {
+    position: fixed;
+    inset: 0;
+    width: min(calc(100% - 2rem), 42rem);
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
+    overflow: auto;
+    border: 0;
+    border-radius: var(--radius-card);
+    background: white;
+    padding: 1.5rem;
+    color: var(--color-ink);
+    box-shadow: var(--shadow-soft);
+  }
+  .modal::backdrop {
+    background: rgb(28 28 25 / 55%);
+  }
+  .lightbox {
+    max-height: 100dvh;
+    max-width: 100vw;
+    overflow: hidden;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: white;
+  }
+  .lightbox::backdrop {
+    background: rgb(10 15 22 / 92%);
+  }
+  .lightbox-control {
+    position: fixed;
+    z-index: 1;
+    display: inline-flex;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 72%);
+    padding: 0.5rem;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .lightbox-control:hover {
+    background: var(--color-primary);
+  }
 }
 
 @media (min-width: 640px) {
-  .modal { padding: 2rem; }
-  .publication-form .form-section { padding: 1.5rem; }
+  .modal {
+    padding: 2rem;
+  }
+  .publication-form .form-section {
+    padding: 1.5rem;
+  }
 }
 
 @media (min-width: 768px) {
-  .publication-form .upload { min-height: 7rem; flex-direction: row; justify-content: flex-start; gap: 1.25rem; text-align: left; }
-  .publication-form .upload > :nth-child(2) { flex: 1; }
+  .publication-form .upload {
+    min-height: 7rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1.25rem;
+    text-align: left;
+  }
+  .publication-form .upload > :nth-child(2) {
+    flex: 1;
+  }
 }

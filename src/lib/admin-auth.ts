@@ -27,14 +27,18 @@ export function isAdminPassword(candidate: string): boolean {
 export async function createAdminSession(): Promise<void> {
   const expires = Math.floor(Date.now() / 1000) + SESSION_SECONDS;
   const payload = `${expires}:${randomBytes(16).toString("base64url")}`;
-  (await cookies()).set(COOKIE_NAME, `${payload}.${digest(payload).toString("base64url")}`, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: SESSION_SECONDS,
-    priority: "high",
-  });
+  (await cookies()).set(
+    COOKIE_NAME,
+    `${payload}.${digest(payload).toString("base64url")}`,
+    {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: SESSION_SECONDS,
+      priority: "high",
+    },
+  );
 }
 
 export async function hasAdminSession(): Promise<boolean> {
@@ -45,8 +49,14 @@ export async function hasAdminSession(): Promise<boolean> {
   const payload = token.slice(0, separator);
   const supplied = Buffer.from(token.slice(separator + 1), "base64url");
   const separatorInPayload = payload.indexOf(":");
-  const expires = Number(separatorInPayload < 0 ? payload : payload.slice(0, separatorInPayload));
-  return Number.isSafeInteger(expires) && expires > Math.floor(Date.now() / 1000) && safeEqual(supplied, digest(payload));
+  const expires = Number(
+    separatorInPayload < 0 ? payload : payload.slice(0, separatorInPayload),
+  );
+  return (
+    Number.isSafeInteger(expires) &&
+    expires > Math.floor(Date.now() / 1000) &&
+    safeEqual(supplied, digest(payload))
+  );
 }
 
 export async function deleteAdminSession(): Promise<void> {

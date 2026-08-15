@@ -12,7 +12,9 @@ export function Footer() {
           Colombia Abriga
         </Link>
         <p className="max-w-2xl text-sm text-ink-muted sm:text-right">
-          Colombia Abriga facilita el contacto entre anunciantes y personas interesadas y no participa en pagos, contratos ni transacciones. © {new Date().getFullYear()}
+          Colombia Abriga facilita el contacto entre anunciantes y personas
+          interesadas y no participa en pagos, contratos ni transacciones. ©{" "}
+          {new Date().getFullYear()}
         </p>
       </Container>
     </footer>

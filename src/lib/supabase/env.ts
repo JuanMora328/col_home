@@ -1,4 +1,7 @@
-function requireEnvironmentVariable(name: string, value: string | undefined): string {
+function requireEnvironmentVariable(
+  name: string,
+  value: string | undefined,
+): string {
   if (!value) {
     throw new Error(`Falta la variable de entorno ${name}.`);
   }

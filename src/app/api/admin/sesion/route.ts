@@ -1,4 +1,8 @@
-import { createAdminSession, deleteAdminSession, isAdminPassword } from "@/lib/admin-auth";
+import {
+  createAdminSession,
+  deleteAdminSession,
+  isAdminPassword,
+} from "@/lib/admin-auth";
 
 export async function POST(request: Request) {
   const formData = await request.formData().catch(() => null);
@@ -10,7 +14,11 @@ export async function POST(request: Request) {
   }
 
   const candidate = formData?.get("password");
-  if (action !== "login" || typeof candidate !== "string" || !isAdminPassword(candidate)) {
+  if (
+    action !== "login" ||
+    typeof candidate !== "string" ||
+    !isAdminPassword(candidate)
+  ) {
     return redirect("/admin/login?error=1");
   }
 
