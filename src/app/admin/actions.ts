@@ -1,7 +1,7 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createAdminSession, deleteAdminSession, hasAdminSession, isAdminPassword } from "@/lib/admin-auth";
 import { createPrivilegedSupabaseClient } from "@/lib/supabase/server";
 import type { ListingStatus } from "@/types/data";
@@ -18,26 +18,26 @@ export async function logout() {
   redirect("/admin/login");
 }
 
-const transitions: Record<ListingStatus, readonly ListingStatus[]> = {
-  PENDING: ["PUBLISHED", "INACTIVE"],
-  PUBLISHED: ["INACTIVE"],
-  INACTIVE: ["PUBLISHED"],
-};
-
-export async function moderateListing(formData: FormData) {
+async function changeStatus(id: string, allowedCurrent: readonly ListingStatus[], next: ListingStatus) {
   if (!await hasAdminSession()) redirect("/admin/login");
-  const id = formData.get("id");
-  const requested = formData.get("status");
-  if (typeof id !== "string" || typeof requested !== "string" || !["PUBLISHED", "INACTIVE"].includes(requested)) redirect("/admin?message=invalid");
   const admin = createPrivilegedSupabaseClient();
   const { data } = await admin.from("listings").select("status").eq("id", id).maybeSingle();
   const current = data?.status as ListingStatus | undefined;
-  if (!current || !transitions[current].includes(requested as ListingStatus)) redirect("/admin?message=invalid");
-  const { error } = await admin.from("listings").update({ status: requested }).eq("id", id).eq("status", current);
-  if (error) redirect("/admin?message=error");
+  if (!current || !allowedCurrent.includes(current)) redirect(`/admin/publicaciones/${id}?message=invalid`);
+  const { error } = await admin.from("listings").update({ status: next }).eq("id", id).eq("status", current);
+  if (error) redirect(`/admin/publicaciones/${id}?message=error`);
   revalidatePath("/");
   revalidatePath("/buscar");
   revalidatePath(`/vivienda/${id}`);
   revalidatePath("/admin");
-  redirect(`/admin?message=${requested === "PUBLISHED" ? "published" : "inactive"}`);
+  revalidatePath(`/admin/publicaciones/${id}`);
+  redirect(`/admin/publicaciones/${id}?message=${next === "PUBLISHED" ? "published" : "inactive"}`);
+}
+
+export async function publishListing(id: string) {
+  await changeStatus(id, ["PENDING"], "PUBLISHED");
+}
+
+export async function deactivateListing(id: string) {
+  await changeStatus(id, ["PENDING", "PUBLISHED"], "INACTIVE");
 }
