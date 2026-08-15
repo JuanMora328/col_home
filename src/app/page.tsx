@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { Container } from "@/components/container";
 import { ListingCard } from "@/components/listing-card";
 import { SearchForm } from "@/components/search-form";
@@ -11,6 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+  // Las publicaciones cambian fuera del ciclo de despliegue (moderación y
+  // limpieza en Supabase), así que esta sección debe consultarse por solicitud.
+  await connection();
   const listings = await getRecentListings();
   return <>
     <Container className="py-16 sm:py-24"><section className="mx-auto flex max-w-4xl flex-col items-center text-center"><p className="eyebrow">Vivienda solidaria en Colombia</p><h1 className="mt-3 max-w-3xl font-heading text-[2rem] leading-[1.2] font-bold tracking-[.02em] text-blue sm:text-5xl">Encuentra un hogar<br className="hidden sm:block" /> cerca de ti</h1><p className="mt-6 max-w-2xl text-lg text-ink-muted">Una forma sencilla de conectar personas que necesitan vivienda con quienes tienen un espacio disponible.</p><div className="mt-8 w-full"><SearchForm /></div><div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-ink-muted"><span>¿Tienes una vivienda disponible?</span><Link href="/publicar" className="button-secondary">Publicar vivienda</Link></div></section></Container>
