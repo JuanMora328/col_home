@@ -91,6 +91,11 @@ a {
   .empty-state { border-radius: var(--radius-card); background: var(--color-surface-container); padding: 2.5rem; text-align: center; color: var(--color-ink-muted); }
   .form-section { border-radius: var(--radius-card); background: var(--color-surface-low); padding: 1.5rem; }
   .form-section legend { width: 100%; padding: 0 0 .75rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; }
+  .publication-form .form-section { min-width: 0; padding: 1.25rem; }
+  .publication-form .form-section legend { padding-bottom: .6rem; color: var(--color-blue); }
+  .publication-form .control, .publication-form .price-wrap { min-height: 3rem; }
+  .publication-form .control { padding-block: .55rem; }
+  .publication-form .upload { min-height: 8.5rem; padding: 1.25rem; }
   .upload { display: flex; min-height: 12rem; cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; border: 2px dashed var(--color-blue); border-radius: var(--radius-control); background: white; padding: 1.5rem; text-align: center; color: var(--color-blue); transition: background-color .15s; }
   .upload:hover { background: var(--color-secondary-soft); }
   .eyebrow { color: var(--color-primary); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
@@ -113,4 +118,10 @@ a {
 
 @media (min-width: 640px) {
   .modal { padding: 2rem; }
+  .publication-form .form-section { padding: 1.5rem; }
+}
+
+@media (min-width: 768px) {
+  .publication-form .upload { min-height: 7rem; flex-direction: row; justify-content: flex-start; gap: 1.25rem; text-align: left; }
+  .publication-form .upload > :nth-child(2) { flex: 1; }
 }
