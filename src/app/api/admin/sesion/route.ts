@@ -6,14 +6,18 @@ export async function POST(request: Request) {
 
   if (action === "logout") {
     await deleteAdminSession();
-    return Response.redirect(new URL("/admin/login", request.url), 303);
+    return redirect("/admin/login");
   }
 
   const candidate = formData?.get("password");
   if (action !== "login" || typeof candidate !== "string" || !isAdminPassword(candidate)) {
-    return Response.redirect(new URL("/admin/login?error=1", request.url), 303);
+    return redirect("/admin/login?error=1");
   }
 
   await createAdminSession();
-  return Response.redirect(new URL("/admin", request.url), 303);
+  return redirect("/admin");
+}
+
+function redirect(location: string): Response {
+  return new Response(null, { status: 303, headers: { location } });
 }
