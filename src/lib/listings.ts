@@ -15,6 +15,8 @@ export type ListingPreview = Pick<
   | "monthly_price"
   | "bedrooms"
   | "bathrooms"
+  | "description"
+  | "contact_phone"
 > & { imageUrl?: string };
 export type ListingDetail = Pick<
   Listing,
@@ -76,7 +78,7 @@ async function addSignedImages(
 }
 
 const previewSelection =
-  "id,property_type,availability_type,city_code,city_name,neighborhood,monthly_price,bedrooms,bathrooms";
+  "id,property_type,availability_type,city_code,city_name,neighborhood,monthly_price,bedrooms,bathrooms,description,contact_phone";
 
 async function addPreviewImages(
   rows: ListingPreview[],
